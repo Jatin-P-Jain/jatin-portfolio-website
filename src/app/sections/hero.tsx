@@ -58,7 +58,13 @@ export default function Hero() {
             aria-label="Twitter"
             className="flex items-center gap-2"
           >
-            <Image src={Github} alt="Github" width={40} height={40} />
+            <Image
+              src={Github}
+              alt="Github"
+              width={35}
+              height={35}
+              className="bg-white rounded-full"
+            />
             <span>Github</span>
           </a>
         </div>

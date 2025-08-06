@@ -51,7 +51,7 @@ export default function Navbar() {
   return (
     <header className="flex items-center justify-between w-full mx-auto py-6 md:py-6 mb-8 fixed top-0 left-0 px-6 md:px-12 backdrop-blur z-50">
       <Button
-        className=" font-semibold text-sky-800 hover:text-sky-700 cursor-pointer border-sky-700 shadow-lg"
+        className=" font-semibold text-sky-800 hover:text-sky-700 cursor-pointer border-sky-700 shadow-lg shadow-gray-500 !bg-white ring-2 border-none"
         variant={"outline"}
         size={"sm"}
       >
@@ -61,11 +61,11 @@ export default function Navbar() {
       {/* Desktop Nav */}
       <nav className="hidden lg:flex items-center gap-4 justify-center">
         {navLinks}
-        <div className="h-6 w-0.5 bg-muted-foreground mx-2"></div>
+        <div className="h-6 w-0.5 bg-gray-200 mx-2"></div>
         <Button className="px-5 py-2 font-medium">
           Download Resume <DownloadIcon className="w-4 h-4 ml-1" />
         </Button>
-        <div className="h-6 w-0.5 bg-muted-foreground mx-2"></div>
+        <div className="h-6 w-0.5 bg-gray-200 mx-2"></div>
         <Button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           variant="ghost"
