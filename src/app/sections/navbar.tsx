@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -13,6 +13,16 @@ import { useTheme } from "next-themes";
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    // Optionally: return a loading state, null, or generic markup
+    return null;
+  }
 
   // Navigation links for reuse
   const navLinks = (
@@ -49,7 +59,7 @@ export default function Navbar() {
   );
 
   return (
-    <header className="flex items-center justify-between w-full mx-auto py-6 md:py-6 mb-8 fixed top-0 left-0 px-6 md:px-12 backdrop-blur z-50">
+    <header className="flex items-center justify-between w-full mx-auto py-6 md:py-6 mb-8 fixed top-0 left-0 px-6 md:px-12 backdrop-blur-xl z-20">
       <Button
         className=" font-semibold text-sky-800 hover:text-sky-700 cursor-pointer border-sky-700 shadow-lg shadow-gray-500 !bg-white ring-2 border-none"
         variant={"outline"}
@@ -73,11 +83,13 @@ export default function Navbar() {
         >
           {theme === "dark" ? (
             <>
-              <Sun className="size-5" /> <span className="text-xs">Light</span>
+              <Sun className="size-5" />{" "}
+              <span className="text-xs">Switch to Light</span>
             </>
           ) : (
             <>
-              <Moon className="size-5" /> <span className="text-xs">Dark</span>
+              <Moon className="size-5" />{" "}
+              <span className="text-xs">Switch to Dark</span>
             </>
           )}
         </Button>

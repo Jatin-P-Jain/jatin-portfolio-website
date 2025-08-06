@@ -21,19 +21,24 @@ export default function Hero() {
   }
 
   return (
-    <section className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-12 mt-12 px-8">
+    <div className="flex flex-col md:flex-row items-center justify-between w-full px-8 md:px-16 max-w-6xl h-full mx-auto gap-12 my-auto">
       {/* Left: Text */}
       <div className="flex flex-col items-start justify-center text-left gap-8 md:gap-8">
-        <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold flex items-center gap-2">
+        <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-2 w-full">
           Hi, I&apos;m Jatin 👋
         </h1>
         {isMobile && <HeroProfile />}
         <p className="md:text-md lg:text-lg text-gray-600 text-justify">
-          I&apos;m a full stack developer (React.js &amp; Node.js) with a focus
-          on creating (and occasionally designing) exceptional digital
-          experiences that are fast, accessible, visually appealing, and
-          responsive. Even though I have been creating web applications for over
-          7 years, I still love it as if it was something new.
+          I&apos;m a frontend & mobile developer with 4+ years of experience building
+          modern, responsive apps using the latest technology. My go-to stack
+          for web is Next.js with Firebase—fully leveraging its backend and
+          storage features for scalable, enterprise-level PWA solutions. I love
+          integrating tech like Google Maps, OTP-based authentication, and more
+          to deliver robust products. For mobile, I build seamless apps with
+          React Native and the best modern tools. I&apos;m passionate about turning
+          ideas into smooth, user-friendly experiences and always excited to
+          solve new challenges. Check out my recent live projects, or reach out
+          if you&apos;re ready to build something awesome together!
         </p>
         <div className="flex items-center gap-4 flex-col">
           <span className="text-sm flex items-start gap-2 justify-start text-gray-600 font-medium w-full">
@@ -71,6 +76,6 @@ export default function Hero() {
       </div>
 
       {!isMobile && <HeroProfile />}
-    </section>
+    </div>
   );
 }
