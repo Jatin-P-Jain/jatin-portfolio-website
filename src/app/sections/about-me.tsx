@@ -18,8 +18,10 @@ export default function AboutMe() {
     return null;
   }
   return (
-    <div className="flex flex-col items-center justify-center px-8 mx-auto py-12 z-1 max-w-6xl">
-      <h2 className="bg-gray-300 px-4 py-1 rounded-lg">About Me</h2>
+    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-6xl">
+      <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
+        About Me
+      </h2>
       <div className="flex flex-col md:flex-row items-center justify-between mx-auto py-8 gap-12">
         {(isDesktop || isLargeDesktop) && (
           <div className="relative">
@@ -31,7 +33,7 @@ export default function AboutMe() {
               className="object-cover md:rounded-lg align-middle border-8 border-gray-100"
               priority
             />
-            <div className="absolute bg-gray-300 top-18 -z-10 -left-4 w-[225px] h-[380px] shadow-lg rounded-bl-lg"></div>
+            <div className="absolute bg-gray-300 top-20 -z-12 -left-4 w-[225px] h-[380px] shadow-lg rounded-bl-lg"></div>
           </div>
         )}
         {/* Right: Textual About Me */}
@@ -40,8 +42,8 @@ export default function AboutMe() {
             Curious about me? Here you have it:
           </h2>
           <p className="">
-            Hey there! I&apos;m Jatin Prakash Jain—a frontend & mobile developer and
-            tech explorer from Udaipur, Rajasthan, aged 27.
+            Hey there! I&apos;m Jatin Prakash Jain—a frontend & mobile developer
+            and tech explorer from Udaipur, Rajasthan, aged 27.
           </p>
           <p className="">
             For over 4 years, I&apos;ve transformed ideas into user-focused apps
@@ -60,14 +62,14 @@ export default function AboutMe() {
             delivering projects faster without sacrificing quality.
           </p>
           <p>
-            I&apos;m driven by solving real problems, writing maintainable code, and
-            crafting user experiences that work. I enjoy collaborating,
+            I&apos;m driven by solving real problems, writing maintainable code,
+            and crafting user experiences that work. I enjoy collaborating,
             learning, and staying curious about new tech.
           </p>
           <p>Some highlights about me:</p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 list-disc list-inside text-sm text-left">
             <li>B.E. in Computer Science Engineering</li>
-            <li>GATE-2021 qualified</li>
+            <li>GATE-2021 qualified | AIR 1958 (604 score)</li>
             <li>4+ years of experience in web and mobile development</li>
             <li>Passionate about building user-friendly, accessible apps</li>
           </ul>
@@ -79,9 +81,9 @@ export default function AboutMe() {
             from both creative thinking and cutting-edge technology.
           </p>
           <p className="italic">
-            Let&apos;s connect! Whether you have a big project or just want to chat
-            tech, I&apos;m all ears—and always up for building something awesome
-            together. 😊
+            Let&apos;s connect! Whether you have a big project or just want to
+            chat tech, I&apos;m all ears—and always up for building something
+            awesome together. 😊
           </p>
         </div>
       </div>

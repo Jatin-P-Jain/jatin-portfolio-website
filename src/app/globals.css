@@ -160,6 +160,8 @@
   }
 }
 html, body {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px;
   transition:
     background-color 0.1s,
     color 0.1s;

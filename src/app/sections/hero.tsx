@@ -21,7 +21,7 @@ export default function Hero() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between w-full px-8 md:px-16 max-w-6xl h-full mx-auto gap-12 my-auto">
+    <div className="flex flex-col md:flex-row items-center justify-between w-full px-8 lg:px-16 xl:px-0 max-w-6xl h-full mx-auto gap-12 my-auto">
       {/* Left: Text */}
       <div className="flex flex-col items-start justify-center text-left gap-8 md:gap-8">
         <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-2 w-full">
