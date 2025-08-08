@@ -23,7 +23,7 @@ export type Project = {
 };
 
 export type WorkExperience = {
-  organization: any;
+  organization: string;
   organizationLogo: string;
   role: string;
   timeline: string;
