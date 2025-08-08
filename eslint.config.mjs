@@ -1,28 +1,29 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js"; // <-- Import recommended config
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended, // <-- Pass the recommended config
 });
 
 const eslintConfig = [
+  js.configs.recommended, // <-- FlatConfig way of including recommended!
   ...compat.extends(
-    "eslint:recommended", // Enforces standard JS rules as errors
-    "plugin:@typescript-eslint/recommended", // TS best practices
+    // You can add more configs here if needed, e.g.:
+    "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
     "next/typescript"
   ),
   {
-    // You can add, override, or elevate rules here
     rules: {
-      // Example: Make unused vars an error
       "no-unused-vars": "error",
       "@typescript-eslint/no-unused-vars": "error",
-      // Add more rules as needed
+      // ...other custom rules
     },
   },
 ];
