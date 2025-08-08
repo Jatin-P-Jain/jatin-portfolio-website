@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends(
-    "eslint:recommended", // Enforces standard JS rules as errors
+    "eslint", // Enforces standard JS rules as errors
     "plugin:@typescript-eslint/recommended", // TS best practices
     "next/core-web-vitals",
     "next/typescript"
