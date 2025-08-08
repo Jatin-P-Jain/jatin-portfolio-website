@@ -22,7 +22,6 @@ const eslintConfig = [
   {
     rules: {
       "no-unused-vars": "error",
-      "@typescript-eslint/no-unused-vars": "error",
       // ...other custom rules
     },
   },

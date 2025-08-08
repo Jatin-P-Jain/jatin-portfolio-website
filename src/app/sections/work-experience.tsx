@@ -1,7 +1,6 @@
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";
-import Winner from "@/icons/hackathon-winner-group.jpeg";
 
 import { workExperiences } from "@/data/work-experiences";
 

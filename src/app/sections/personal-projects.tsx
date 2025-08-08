@@ -45,7 +45,7 @@ export default function ProjectsSection() {
   return (
     <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-6xl md:gap-8">
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
-        Personal Projects
+        Personal’ Projects
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-600 text-justify md:text-lg py-4 md:py-0">
         {projects.map((project) => (

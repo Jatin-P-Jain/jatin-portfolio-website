@@ -2,11 +2,10 @@
 
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function AboutMe() {
-  const { isMobile, isTablet, isDesktop, isLargeDesktop } = useBreakpoint();
+  const { isDesktop, isLargeDesktop } = useBreakpoint();
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
