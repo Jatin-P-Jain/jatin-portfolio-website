@@ -111,7 +111,7 @@ export default function CertificationsList() {
         <CarouselContent
           className={clsx(" p-8", {
             "w-[180px]": isSmallMobile,
-            "w-[280px]": isMobile,
+            "w-[310px]": isMobile,
             "w-[600px]": isTablet,
             "w-[840px]": isDesktop,
             "w-[1100px]": isLargeDesktop,

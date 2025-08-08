@@ -68,12 +68,12 @@ export default function Home() {
         ></div>
         <ContactSection />
       </section>
-      <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-4">
-        <p className="text-gray-600 text-sm">
+      <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-1 px-8">
+        <p className="text-gray-600 text-sm text-center w-full">
           Made with ❤️ and NextJS 15 | Shadcn UI | Tailwind CSS by Jatin Praksh
           Jain.
         </p>
-        <span className="hover:underline cursor-pointer">
+        <span className="underline hover:scale-105 cursor-pointer">
           Leave a feedback?
         </span>
       </footer>

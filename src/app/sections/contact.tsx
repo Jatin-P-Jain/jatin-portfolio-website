@@ -40,11 +40,11 @@ const ContactSection: React.FC = () => {
         What&apos;s next? Feel free to reach out to me if you&apos;re looking
         for a developer, have a query, or simply want to connect.
       </p>
-      <ul className="flex flex-col gap-6 items-center w-full mb-6">
+      <ul className="flex flex-col gap-6 items-center justify-center w-full mb-6">
         {contactDetails.map((detail) => (
           <li
             key={detail.label}
-            className="flex flex-col md:flex-row md:items-center md:gap-4 text-lg font-bold text-black w-full justify-center"
+            className="flex flex-col md:flex-row items-center md:gap-4 text-lg font-bold text-black w-full justify-center"
           >
             <div className="flex items-center gap-2">
               <span>
