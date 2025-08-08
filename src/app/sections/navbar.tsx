@@ -49,7 +49,7 @@ export default function Navbar() {
         Experience
       </a>
       <a
-        href="#work-offset"
+        href="#projects-offset"
         className="hover:text-gray-700 border-b-2 border-transparent hover:border-gray-500 px-2 py-1"
         onClick={() => setOpen(false)}
       >
