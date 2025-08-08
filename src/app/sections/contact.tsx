@@ -1,5 +1,5 @@
 "use client";
-import { CopyIcon, DotSquare, Mail, MailIcon, PhoneIcon } from "lucide-react";
+import { CopyIcon, MailIcon, PhoneIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import LinkedIn from "@/icons/linkedin.svg";
@@ -18,24 +18,6 @@ const contactDetails = [
   },
 ];
 
-const socialIcons = [
-  {
-    label: "LinkedIn",
-    icon: <DotSquare />,
-    link: "#", // Replace with your actual LinkedIn link
-  },
-  {
-    label: "GitHub",
-    icon: <DotSquare />,
-    link: "#",
-  },
-  {
-    label: "LinkedIn",
-    icon: <DotSquare />,
-    link: "#",
-  },
-];
-
 const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -44,7 +26,9 @@ const ContactSection: React.FC = () => {
       await navigator.clipboard.writeText(value);
       setCopied(value);
       setTimeout(() => setCopied(null), 1500);
-    } catch (err) {}
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
   };
 
   return (
@@ -53,7 +37,7 @@ const ContactSection: React.FC = () => {
         Get in touch
       </h2>
       <p className="mb-8 text-gray-600 text-center max-w-lg">
-        What’s next? Feel free to reach out to me if you're looking for a
+        What&apos;s next? Feel free to reach out to me if you're looking for a
         developer, have a query, or simply want to connect.
       </p>
       <ul className="flex flex-col gap-6 items-center w-full mb-6">
