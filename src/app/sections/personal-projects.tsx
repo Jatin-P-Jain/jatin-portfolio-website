@@ -47,9 +47,9 @@ export default function ProjectsSection() {
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
         Personal Projects
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-600 text-justify md:text-lg py-4 md:py-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 text-gray-600 text-justify md:text-lg py-4 md:py-0">
         {projects.map((project) => (
-          <Card key={project.title} className="p-8 hover:scale-105 transition-transform duration-300">
+          <Card key={project.title} className="p-4 md:p-6 lg:p-8 hover:scale-105 transition-transform duration-300 gap-4 md:gap-8">
             <CardTitle className="">{project.title}</CardTitle>
             <CardDescription className="flex-1">{project.description}</CardDescription>
             <CardFooter className="flex items-end w-full justify-end !p-0 text-sm text-sky-600 hover:text-sky-800 justify-self-end">

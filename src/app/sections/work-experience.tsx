@@ -6,7 +6,7 @@ import { workExperiences } from "@/data/work-experiences";
 
 export default function WorkExperienceSection() {
   return (
-    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-6xl md:gap-8">
+    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-5xl md:gap-8">
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
         Work Experience
       </h2>
@@ -102,20 +102,20 @@ export default function WorkExperienceSection() {
                   </div>
                 </div>
                 {exp.winner && (
-                  <div className="max-w-3xl mx-auto p-6 bg-yellow-50 rounded-lg shadow-md text-center flex flex-col gap-4 mt-4">
-                    <h3 className="text-2xl font-bold text-yellow-800">
+                  <div className="max-w-2xl mx-auto p-6 bg-yellow-50 rounded-lg shadow-md text-center flex flex-col gap-4 mt-4 text-sm md:text-base">
+                    <h3 className="text-base md:text-xl lg:text-2xl font-bold text-yellow-800">
                       {exp.winner?.title} 🎉
                     </h3>
                     <p className="text-yellow-900">{exp.winner?.description}</p>
-                    <div className="flex justify-center gap-16">
+                    <div className="flex justify-center gap-4 md:gap-16 flex-col items-center md:flex-row">
                       {exp.winner?.images.map((image, idx) => (
                         <div className="flex w-36 h-36 relative" key={idx}>
                           <Image
                             key={idx}
                             src={image}
                             alt={`Logo ${idx + 1}`}
-                            width={540}
-                            height={540}
+                            width={1024}
+                            height={1024}
                             className="rounded-lg object- hover:scale-200 transition-transform duration-300 hover:z-10 border-3 border-yellow-50 ring-2 
                             ring-gray-600"
                           />
