@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function AboutMe() {
-  const { isDesktop, isLargeDesktop } = useBreakpoint();
+  const { isMobile, isDesktop, isLargeDesktop } = useBreakpoint();
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function AboutMe() {
   return (
     <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-6xl">
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
-        About Me
+        About' Me
       </h2>
       <div className="flex flex-col md:flex-row items-center justify-between mx-auto py-8 gap-12">
         {(isDesktop || isLargeDesktop) && (
