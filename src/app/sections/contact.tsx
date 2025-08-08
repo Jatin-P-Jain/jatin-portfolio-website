@@ -37,8 +37,8 @@ const ContactSection: React.FC = () => {
         Get in touch
       </h2>
       <p className="mb-8 text-gray-600 text-center max-w-lg">
-        What&apos;s next? Feel free to reach out to me if you're looking for a
-        developer, have a query, or simply want to connect.
+        What&apos;s next? Feel free to reach out to me if you&apos;re looking
+        for a developer, have a query, or simply want to connect.
       </p>
       <ul className="flex flex-col gap-6 items-center w-full mb-6">
         {contactDetails.map((detail) => (
