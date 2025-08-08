@@ -1,4 +1,5 @@
 import AboutMe from "./sections/about-me";
+import CertificationsList from "./sections/certifications";
 import Hero from "./sections/hero";
 import ProjectsSection from "./sections/personal-projects";
 import SkillsSection from "./sections/skills";
@@ -45,6 +46,16 @@ export default function Home() {
           style={{ position: "absolute", top: "-20px", height: "20px" }}
         ></div>
         <ProjectsSection />
+      </section>
+      <section
+        id="certifications"
+        className="w-full flex flex-col md:flex-row items-center md:items-start justify-between gap-12 relative bg-gray-100"
+      >
+        <div
+          id="certifications-offset"
+          style={{ position: "absolute", top: "-20px", height: "20px" }}
+        ></div>
+        <CertificationsList />
       </section>
     </main>
   );

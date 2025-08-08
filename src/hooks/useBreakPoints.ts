@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 
 const breakpoints = {
+  xs: 375,
   sm: 640,
   md: 768,
   lg: 1024,
@@ -31,6 +32,7 @@ export function useBreakpoint() {
   }, []);
 
   return {
+    isSmallMobile: width !== undefined && width < breakpoints.xs,
     isMobile: width !== undefined && width < breakpoints.sm,
     isTablet:
       width !== undefined && width >= breakpoints.sm && width < breakpoints.lg,

@@ -12,8 +12,8 @@ import Firebase from "@/icons/icon-firebase.svg";
 import Angular from "@/icons/icon-angular.svg";
 import Spring from "@/icons/icon-spring.svg";
 import Java from "@/icons/icon-java.svg";
-import WinnerGroup from "@/icons/hackathon-winner-group.jpeg";
-import WinnerSingle from "@/icons/hackathon-winner-single.jpg";
+import WinnerGroup from "@/assets/images/hackathon-winner-group.jpeg";
+import WinnerSingle from "@/assets/images/hackathon-winner-single.jpg";
 import { StaticImageData } from "next/image";
 
 export type Project = {

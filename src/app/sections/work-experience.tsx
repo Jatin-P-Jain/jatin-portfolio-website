@@ -35,7 +35,6 @@ export default function WorkExperienceSection() {
                 </p>
                 <p className="mb-3">{exp.description}</p>
 
-                {/* Projects */}
                 {exp.projects && exp.projects.length > 0 && (
                   <div className="flex flex-col gap-4">
                     <h4 className="font-semibold text-black/90">

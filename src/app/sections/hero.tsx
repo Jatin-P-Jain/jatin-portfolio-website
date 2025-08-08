@@ -21,7 +21,7 @@ export default function Hero() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between w-full px-8 lg:px-16 xl:px-0 max-w-6xl h-full mx-auto gap-12 my-auto">
+    <div className="flex flex-col md:flex-row items-center justify-between w-full px-8 py-8 pb-12 lg:px-16 xl:px-0 max-w-6xl h-full mx-auto gap-12 my-auto">
       {/* Left: Text */}
       <div className="flex flex-col items-start justify-center text-left gap-8 md:gap-8">
         <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-2 w-full">
@@ -29,16 +29,16 @@ export default function Hero() {
         </h1>
         {isMobile && <HeroProfile />}
         <p className="md:text-md lg:text-lg text-gray-600 text-justify">
-          I&apos;m a frontend & mobile developer with 4+ years of experience building
-          modern, responsive apps using the latest technology. My go-to stack
-          for web is Next.js with Firebase—fully leveraging its backend and
-          storage features for scalable, enterprise-level PWA solutions. I love
-          integrating tech like Google Maps, OTP-based authentication, and more
-          to deliver robust products. For mobile, I build seamless apps with
-          React Native and the best modern tools. I&apos;m passionate about turning
-          ideas into smooth, user-friendly experiences and always excited to
-          solve new challenges. Check out my recent live projects, or reach out
-          if you&apos;re ready to build something awesome together!
+          I&apos;m a frontend & mobile developer with 4+ years of experience
+          building modern, responsive apps using the latest technology. My go-to
+          stack for web is Next.js with Firebase—fully leveraging its backend
+          and storage features for scalable, enterprise-level PWA solutions. I
+          love integrating tech like Google Maps, OTP-based authentication, and
+          more to deliver robust products. For mobile, I build seamless apps
+          with React Native and the best modern tools. I&apos;m passionate about
+          turning ideas into smooth, user-friendly experiences and always
+          excited to solve new challenges. Check out my recent live projects, or
+          reach out if you&apos;re ready to build something awesome together!
         </p>
         <div className="flex items-center gap-4 flex-col">
           <span className="text-sm flex items-start gap-2 justify-start text-gray-600 font-medium w-full">
