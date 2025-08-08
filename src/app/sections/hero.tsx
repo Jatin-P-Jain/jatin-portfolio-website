@@ -51,16 +51,16 @@ export default function Hero() {
         </div>
         <div className="flex gap-6">
           <a
-            href="https://github.com/"
-            aria-label="GitHub"
+            href="https://www.linkedin.com/in/jatin-prakash-jain/"
+            aria-label="LinkedIn"
             className="flex items-center gap-2 hover:text-blue-900"
           >
             <Image src={LinkedIn} alt="LinkedIn" width={40} height={40} />
             <span>LinkedIn</span>
           </a>
           <a
-            href="https://twitter.com/"
-            aria-label="Twitter"
+            href="https://github.com/Jatin-P-Jain?tab=repositories"
+            aria-label="Github"
             className="flex items-center gap-2"
           >
             <Image
