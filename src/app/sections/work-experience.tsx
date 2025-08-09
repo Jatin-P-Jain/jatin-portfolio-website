@@ -19,13 +19,17 @@ export default function WorkExperienceSection() {
           <li key={idx} className="w-full">
             <Card className="bg-white rounded-lg shadow-gray-300 shadow-md p-2 py-6 md:p-8 transition-all duration-300 hover:scale-105">
               <CardTitle className="text-2xl font-bold flex gap-4 text-black/90 justify-start items-center px-4">
-                <Image
-                  src={exp.organizationLogo}
-                  alt={`${exp.organization} Logo`}
-                  width={80}
-                  height={80}
-                  style={{ transform: `scale(${exp.scale || 1})` }}
-                />
+                <div className="relative w-16 h-16 md:w-20 md:h-20">
+                  <Image
+                    src={exp.organizationLogo}
+                    alt={`${exp.organization} Logo`}
+                    fill
+                    sizes="128px"
+                    className="object-contain"
+                    style={{ transform: `scale(${exp.scale || 1})` }}
+                  />
+                </div>
+
                 {exp.organization}
               </CardTitle>
               <CardContent className="text-black/70 ">
@@ -89,13 +93,16 @@ export default function WorkExperienceSection() {
                         key={i}
                         className="text-black/80 px-4 py-1 rounded-full text-sm font-semibold shadow-md bg-black/5 flex justify-center items-center gap-1"
                       >
-                        <Image
-                          src={tech.logo}
-                          alt={tech.name}
-                          width={16}
-                          height={16}
-                          className="inline-block mr-1"
-                        />
+                        <div className="relative w-4 h-4 mr-1">
+                          <Image
+                            src={tech.logo}
+                            alt={tech.name}
+                            fill
+                            sizes="32px"
+                            className="object-contain"
+                          />
+                        </div>
+
                         {tech.name}
                       </span>
                     ))}
@@ -114,9 +121,9 @@ export default function WorkExperienceSection() {
                             key={idx}
                             src={image}
                             alt={`Logo ${idx + 1}`}
-                            width={1024}
-                            height={1024}
-                            className="rounded-lg object- hover:scale-200 transition-transform duration-300 hover:z-10 border-3 border-yellow-50 ring-2 
+                            fill
+                            sizes="1024px"
+                            className="rounded-lg object-cover hover:scale-200 transition-transform duration-300 hover:z-10 border-3 border-yellow-50 ring-2 
                             ring-gray-600"
                           />
                         </div>

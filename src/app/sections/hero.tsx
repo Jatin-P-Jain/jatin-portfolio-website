@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MapPin, DotIcon } from "lucide-react";
 import LinkedIn from "@/icons/linkedin.svg";
 import Github from "@/icons/github.svg";
+import CallAnimated from "@/icons/call-animated.gif";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import HeroProfile from "@/components/custom-components/hero-profile";
 import { useEffect, useState } from "react";
@@ -49,7 +50,7 @@ export default function Hero() {
             Available for new projects
           </span>
         </div>
-        <div className="flex gap-6">
+        <div className="flex gap-6 w-full flex-wrap">
           <a
             href="https://www.linkedin.com/in/jatin-prakash-jain/"
             aria-label="LinkedIn"
@@ -71,6 +72,23 @@ export default function Hero() {
               className="bg-white rounded-full"
             />
             <span>Github</span>
+          </a>
+          <a
+            href="#contact-offset"
+            aria-label="Github"
+            className="bg-gradient-to-br from-amber-400 via-amber-300 to-amber-400 md:ml-auto flex items-center gap-2 rounded-lg px-2 md:px-3 md:py-1.5 border-2 border-amber-300/40 hover:bg-amber-300/40 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 dark:shadow-gray-400"
+          >
+            <div className="relative w-8 h-8">
+              <Image
+                src={CallAnimated}
+                alt="Connect with me"
+                fill
+                sizes="150px"
+                className=""
+              />
+            </div>
+
+            <span className="font-semibold text-black/90">Contact / Hire Me</span>
           </a>
         </div>
       </div>

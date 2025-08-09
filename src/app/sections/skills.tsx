@@ -86,7 +86,9 @@ const skills: Skill[] = [
 export default function SkillsSection() {
   return (
     <div className="flex flex-col items-center justify-center mx-auto py-12 gap-4 px-8 lg:px-16 xl:px-0 md:gap-12 max-w-6xl">
-      <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">Skills</h2>
+      <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
+        Skills
+      </h2>
       <p className="text-center text-gray-600 md:text-lg">
         The skills, tools and technologies I am really good at:
       </p>
@@ -94,15 +96,17 @@ export default function SkillsSection() {
         {skills.map((skill) => (
           <figure
             key={skill.name}
-            className="flex flex-col justify-between items-center gap-4 h-full w-full"
+            className="flex flex-col gap-2 w-18 items-center"
           >
-            <Image
-              src={skill.imageSrc}
-              alt={skill.alt}
-              width={64}
-              height={64}
-            />
-            <figcaption className="text-sm md:text-base line-clamp-1">
+            <div className="relative w-18 h-18">
+              <Image
+                src={skill.imageSrc}
+                alt={skill.alt}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="text-sm md:text-base line-clamp-1 text-center">
               {skill.name}
             </figcaption>
           </figure>

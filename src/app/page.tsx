@@ -69,11 +69,11 @@ export default function Home() {
         <ContactSection />
       </section>
       <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-1 px-8">
-        <p className="text-gray-600 text-sm text-center w-full">
+        <p className="text-gray-600 text-sm text-center w-full md:w-fit">
           Made with ❤️ and NextJS 15 | Shadcn UI | Tailwind CSS by Jatin Praksh
           Jain.
         </p>
-        <span className="underline hover:scale-105 cursor-pointer">
+        <span className="underline hover:scale-105 cursor-pointer transition-all duration-300">
           Leave a feedback?
         </span>
       </footer>

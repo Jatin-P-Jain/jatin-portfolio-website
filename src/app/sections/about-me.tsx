@@ -80,9 +80,9 @@ export default function AboutMe() {
             from both creative thinking and cutting-edge technology.
           </p>
           <p className="italic">
-            Let&apos;s connect! Whether you have a big project or just want to
-            chat tech, I&apos;m all ears—and always up for building something
-            awesome together. 😊
+            <a className="underline" href="#contact-offset">Let&apos;s connect!</a> Whether you have a
+            big project or just want to chat tech, I&apos;m all ears—and always
+            up for building something awesome together. 😊
           </p>
         </div>
       </div>

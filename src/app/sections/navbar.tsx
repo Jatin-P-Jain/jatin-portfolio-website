@@ -17,7 +17,7 @@ export default function Navbar() {
   const [hydrated, setHydrated] = useState(false);
   // Ensure theme is set to 'light' if not already defined
   useEffect(() => {
-    if (!theme) {
+    if (!theme || theme === "system") {
       setTheme("light");
     }
   }, [theme, setTheme]);
