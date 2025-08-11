@@ -88,7 +88,9 @@ export default function Hero() {
               />
             </div>
 
-            <span className="font-semibold text-black/90">Contact / Hire Me</span>
+            <span className="font-semibold text-black/90">
+              Contact / Hire Me
+            </span>
           </a>
         </div>
       </div>

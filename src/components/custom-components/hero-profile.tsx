@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function HeroProfile() {
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
   const [hydrated, setHydrated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setHydrated(true);
@@ -19,6 +20,11 @@ export default function HeroProfile() {
   return (
     <div className="relative flex-shrink-0 mx-auto">
       <div className="md:rounded-lg overflow-hidden relative">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-400"></div>
+          </div>
+        )}
         <Image
           src="/profile.jpg"
           alt="Jatin's Profile Picture"
@@ -26,6 +32,7 @@ export default function HeroProfile() {
           height={isMobile ? 250 : isTablet ? 250 : isDesktop ? 350 : 400}
           className="object-cover md:rounded-lg align-middle border-8 border-gray-default"
           priority
+          onLoad={() => setLoading(false)}
         />
       </div>
       {/* Offset shadow effect */}

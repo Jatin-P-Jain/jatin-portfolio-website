@@ -10,6 +10,7 @@ import {
 import { Menu, DownloadIcon, Sun, Moon, MonitorDotIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Separator } from "@/components/ui/separator";
+import LiveProjectsDialog from "../live-projects";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -67,13 +68,14 @@ export default function Navbar() {
 
   return (
     <header className="flex items-center justify-between w-full mx-auto py-6 md:py-6 mb-8 fixed top-0 left-0 px-6 md:px-4 backdrop-blur-lg z-20">
-      <Button
+      {/* <Button
         className="hover:scale-110 transition-all duration-500 font-semibold text-sky-800 hover:text-sky-700 cursor-pointer border-sky-700 shadow-lg shadow-gray-500 !bg-white ring-2 border-none md:ml-4"
         variant={"outline"}
         size={"sm"}
       >
         Live Projects <MonitorDotIcon className="size-5 ml-1" />
-      </Button>
+      </Button> */}
+      <LiveProjectsDialog />
 
       {/* Desktop Nav */}
       <nav className="hidden lg:flex items-center gap-1 xl:gap-4 justify-center">

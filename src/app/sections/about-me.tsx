@@ -17,7 +17,7 @@ export default function AboutMe() {
     return null;
   }
   return (
-    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-6xl">
+    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-20 z-1 max-w-6xl">
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
         About Me
       </h2>
@@ -36,8 +36,8 @@ export default function AboutMe() {
           </div>
         )}
         {/* Right: Textual About Me */}
-        <div className="text-base text-gray-600 text-justify w-full flex flex-col gap-4">
-          <h2 className="text-3xl text-gray-950 font-semibold">
+        <div className="text-base text-gray-600 text-justify w-full flex flex-col md:gap-3 lg:gap-4 gap-2">
+          <h2 className=" text-xl md:text-2xl lg:text-3xl text-gray-950 font-semibold">
             Curious about me? Here you have it:
           </h2>
           <p className="">

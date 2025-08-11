@@ -1,5 +1,4 @@
 "use client";
-import { Card, CardFooter } from "@/components/ui/card";
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import Gate2021 from "@/assets/images/Gate-2021.png";
@@ -76,7 +75,7 @@ export default function CertificationsList() {
     setHydrated(true);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!api) {
       return;
     }
@@ -94,7 +93,7 @@ export default function CertificationsList() {
     return null;
   }
   return (
-    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-5xl">
+    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-20 max-w-6xl gap-4">
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800 mb-4">
         Certifications
       </h2>
@@ -105,58 +104,54 @@ export default function CertificationsList() {
         </p>
       </div>
       <Carousel
-        className="flex flex-col justify-center items-center"
+        orientation="horizontal"
+        className="gap-6 flex flex-col w-full"
         setApi={setApi}
       >
-        <CarouselContent
-          className={clsx(" p-8", {
-            "w-[180px]": isSmallMobile,
-            "w-[310px]": isMobile,
-            "w-[600px]": isTablet,
-            "w-[840px]": isDesktop,
-            "w-[1100px]": isLargeDesktop,
-          })}
-        >
-          {certifications.map((cert, idx) => (
-            <CarouselItem key={idx} className="md:basis-1/2 lg:basis-1/3 hover:scale-105 transition-transform duration-300">
-              <Card className="h-full w-full flex flex-col items-center justify-between p-4 bg-gray-default">
-                {idx === 0 && (
-                  <div className="text-xs font-semibold w-full text-right text-sky-900">
-                    <span className="bg-sky-100 p-1 px-2 rounded-full">
-                      🔵 Latest
-                    </span>
-                  </div>
-                )}
-                <Image
-                  src={cert.imageSrc}
-                  alt={cert.caption}
-                  width={cert.width || 200}
-                  height={cert.height || 100}
-                  className="object-contain flex-1"
-                />
-                <CardFooter className="text-center text-gray-500">
+        <CarouselContent className="py-2 px-1 w-80">
+          {certifications.map((cert) => (
+            <CarouselItem key={cert.caption} className="">
+              <div className="bg-gray-default rounded-3xl p-4 border border-gray-200 shadow-md h-full flex flex-col justify-center gap-4">
+                {/* image */}
+                <div className="relative w-full flex justify-center items-center flex-col h-full">
+                  <Image
+                    src={cert.imageSrc}
+                    alt={cert.caption}
+                    width={cert.width}
+                    height={cert.height}
+                    className={clsx(
+                      "object-contain rounded-lg shadow-md",
+                      isMobile ? "w-full" : "w-72"
+                    )}
+                  />
+                </div>
+
+                {/* caption text */}
+                <p className="text-center text-sm text-gray-600 mt-auto">
                   {cert.caption}
-                </CardFooter>
-              </Card>
+                </p>
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        {(isDesktop || isTablet) && (
-          <>
-            <CarouselPrevious className="" />
-            <CarouselNext className="" />
-          </>
-        )}
-        <div className="flex justify-center items-center gap-2">
-          {Array.from({ length: count }).map((_, i) => (
-            <span
-              key={i}
-              className={`h-2 w-2 rounded-full transition-colors ${
-                current === i + 1 ? "bg-sky-600" : "bg-gray-300"
-              }`}
-            />
-          ))}
+
+        {/* Position nav buttons */}
+        <div className="relative w-full ">
+          <CarouselPrevious className="absolute left-0 bottom-0 z-10" />
+          <div className="flex justify-center items-center gap-2 ">
+            {Array.from({ length: count }).map((_, i) => (
+              <span
+                key={i}
+                className={`h-2 w-2 rounded-full transition-colors ${
+                  current === i + 1 ? "bg-sky-600" : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+          <CarouselNext className="absolute right-0 bottom-0  z-10" />
         </div>
+
+        {/* Dots */}
       </Carousel>
     </div>
   );

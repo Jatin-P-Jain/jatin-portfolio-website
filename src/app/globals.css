@@ -166,6 +166,14 @@ html, body {
     background-color 0.1s,
     color 0.1s;
 }
+@layer components {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
 /* * {
   transition:
     background-color 0.1s,

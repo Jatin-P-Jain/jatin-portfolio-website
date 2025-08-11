@@ -43,7 +43,7 @@ const projects: Project[] = [
 
 export default function ProjectsSection() {
   return (
-    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-12 z-1 max-w-6xl md:gap-8">
+    <div className="flex flex-col items-center justify-center px-8 mx-auto lg:px-16 xl:px-0 py-20 z-1 max-w-6xl md:gap-8 gap-6">
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800">
         Personal Projects
       </h2>
