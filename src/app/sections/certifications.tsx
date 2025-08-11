@@ -65,7 +65,7 @@ const certifications: Certification[] = [
 ];
 
 export default function CertificationsList() {
-  const { isSmallMobile, isMobile, isDesktop, isTablet, isLargeDesktop } =
+  const {  isMobile } =
     useBreakpoint();
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
