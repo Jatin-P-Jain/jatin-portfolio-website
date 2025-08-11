@@ -116,9 +116,9 @@ export default function WorkExperienceSection() {
                       {exp.winner?.title} 🎉
                     </h3>
                     <p className="text-yellow-900">{exp.winner?.description}</p>
-                    <div className="flex justify-center gap-4 md:gap-16 flex-col items-center md:flex-row">
+                    <div className="flex justify-center gap-4 md:gap-16 items-center flex-row">
                       {exp.winner?.images.map((image, idx) => (
-                        <div className="flex w-36 h-36 relative" key={idx}>
+                        <div className="flex md:w-36 md:h-36 w-24 h-24 relative" key={idx}>
                           {loading && (
                             <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
                               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-400"></div>

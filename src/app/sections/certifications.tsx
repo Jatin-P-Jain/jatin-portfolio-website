@@ -65,8 +65,7 @@ const certifications: Certification[] = [
 ];
 
 export default function CertificationsList() {
-  const {  isMobile } =
-    useBreakpoint();
+  const { isMobile } = useBreakpoint();
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
@@ -108,10 +107,10 @@ export default function CertificationsList() {
         className="gap-6 flex flex-col w-full"
         setApi={setApi}
       >
-        <CarouselContent className="py-2 px-1 w-80">
+        <CarouselContent className="py-2 px-1 md:py-4 md:px-2 w-70">
           {certifications.map((cert) => (
             <CarouselItem key={cert.caption} className="">
-              <div className="bg-gray-default rounded-3xl p-4 border border-gray-200 shadow-md h-full flex flex-col justify-center gap-4">
+              <div className="transition-transform duration-300 hover:scale-105 bg-gray-default rounded-3xl p-4 border border-gray-200 shadow-md h-full flex flex-col justify-center gap-4">
                 {/* image */}
                 <div className="relative w-full flex justify-center items-center flex-col h-full">
                   <Image
@@ -120,7 +119,7 @@ export default function CertificationsList() {
                     width={cert.width}
                     height={cert.height}
                     className={clsx(
-                      "object-contain rounded-lg shadow-md",
+                      "object-contain rounded-lg shadow-md hover:scale-110 transition-transform duration-300",
                       isMobile ? "w-full" : "w-72"
                     )}
                   />

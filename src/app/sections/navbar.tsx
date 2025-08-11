@@ -11,6 +11,7 @@ import { Menu, DownloadIcon, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Separator } from "@/components/ui/separator";
 import LiveProjectsDialog from "../live-projects";
+import Link from "next/link";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -74,8 +75,14 @@ export default function Navbar() {
       <nav className="hidden lg:flex items-center gap-1 xl:gap-4 justify-center">
         {navLinks}
         <div className="h-6 w-0.5 bg-gray-200 mx-2"></div>
-        <Button className="px-5 py-2 font-medium cursor-pointer">
-          Download Resume <DownloadIcon className="w-4 h-4 ml-1" />
+        <Button className="px-5 py-2 font-medium cursor-pointer" asChild>
+          <Link
+            href={"/Jatin_Jain_Frontend-Developer_2025.pdf"}
+            target="_blank"
+            download={"Jatin_Jain_Frontend-Developer_2025.pdf"}
+          >
+            Download Resume <DownloadIcon className="w-4 h-4 ml-1" />
+          </Link>
         </Button>
         <div className="h-6 w-0.5 bg-gray-200 mx-2"></div>
         <Button
@@ -100,6 +107,56 @@ export default function Navbar() {
 
       {/* Mobile Nav: Hamburger + Drawer */}
       <div className="lg:hidden flex items-center">
+        <Button
+          asChild
+          className={
+            "px-5 py-2 font-medium cursor-pointer flex flex-col gap-1 translate-x-0 opacity-100 transition-all duration-300" +
+            (open ? " translate-x-35 opacity-0" : "")
+          }
+          variant={"ghost"}
+        >
+          <Link
+            href={"/Jatin_Jain_Frontend-Developer_2025.pdf"}
+            target="_blank"
+            download={"Jatin_Jain_Frontend-Developer_2025.pdf"}
+          >
+            <DownloadIcon className="w-4 h-4 ml-1" />{" "}
+            <span className="text-[8px]">Resume</span>
+          </Link>
+        </Button>
+        <div
+          className={
+            "h-6 w-0.5 bg-gray-200 mx-2 translate-x-0 opacity-100 transition-all duration-300" +
+            (open ? " translate-x-45 opacity-0" : "")
+          }
+        ></div>
+        <Button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          variant="ghost"
+          className={
+            "flex items-center gap-1 !p-2 cursor-pointer flex-col justify-center translate-x-0 opacity-100 transition-all duration-300" +
+            (open ? " translate-x-25 opacity-0 " : "")
+          }
+        >
+          {theme === "dark" ? (
+            <div className="flex items-center gap-1 flex-col justify-center ">
+              {/* Use Sun icon for light theme */}
+              <Sun className="size-4" />
+              <span className="text-[8px]">Light Mode</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1 flex-col justify-center">
+              <Moon className="size-4" />{" "}
+              <span className="text-[8px]">Dark Mode</span>
+            </div>
+          )}
+        </Button>
+        <div
+          className={
+            "h-6 w-0.5 bg-gray-200 mx-2 translate-x-0 opacity-100 transition-all duration-300" +
+            (open ? " translate-x-25 opacity-0 " : "")
+          }
+        ></div>
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="Open menu">
@@ -113,11 +170,14 @@ export default function Navbar() {
               </DrawerTitle>
               {navLinks}
               <Separator />
-              <Button
-                className="w-full cursor-pointer mt-4"
-                onClick={() => setOpen(false)}
-              >
-                Download Resume <DownloadIcon className="w-4 h-4 ml-1" />
+              <Button asChild className="w-full cursor-pointer mt-4">
+                <Link
+                  href={"/Jatin_Jain_Frontend-Developer_2025.pdf"}
+                  target="_blank"
+                  download={"Jatin_Jain_Frontend-Developer_2025.pdf"}
+                >
+                  Download Resume <DownloadIcon className="w-4 h-4 ml-1" />
+                </Link>
               </Button>
               <Button
                 onClick={() => {
