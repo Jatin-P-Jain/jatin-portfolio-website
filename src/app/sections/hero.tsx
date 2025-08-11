@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { MapPin, DotIcon, ArrowUp, ChevronsUp } from "lucide-react";
+import { MapPin, DotIcon, ChevronsUp } from "lucide-react";
 import LinkedIn from "@/icons/linkedin.svg";
 import Github from "@/icons/github.svg";
 import CallAnimated from "@/icons/call-animated.gif";
