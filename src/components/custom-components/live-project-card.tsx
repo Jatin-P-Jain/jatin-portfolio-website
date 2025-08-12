@@ -81,7 +81,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
     >
       {/* Title */}
       <h3 className="text-lg md:text-xl font-bold mb-2 flex flex-row justify-start items-center gap-4">
-        <div className="relative w-12 h-12">
+        <div className="relative w-8 h-8">
           <Image
             src={project.projectLogo}
             alt="Project Logo"
@@ -89,7 +89,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
             className="object-contain"
           />
         </div>
-        {project.name}
+        <span className="flex h-full justify-center items-center">{project.name}</span>
       </h3>
 
       {/* Description */}
@@ -115,7 +115,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
         ref={featuresRef}
         className="flex gap-1 overflow-auto mt-1 text-justify px-4 max-h-25 md:max-h-40 flex-col no-scrollbar"
       >
-        <ul className="list-disc list-inside flex flex-col gap-1 text-sm">
+        <ul className="list-disc list-inside flex flex-col gap-0 md:gap-1 text-sm">
           {project.highlights.map((h, i) => (
             <li key={i} className="text-gray-600">
               {h}
@@ -136,7 +136,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
       <p className="text-xs text-gray-400 mt-2">Tech Stack</p>
       <div
         ref={techRef}
-        className="flex gap-2 overflow-auto mt-1 text-justify px-3 text-gray-600 flex-wrap py-2 max-h-25 md:max-h-40 no-scrollbar"
+        className="flex gap-2 overflow-auto mt-1 text-justify px-3 text-gray-600 flex-wrap py-2 max-h-25 md:max-h-40 no-scrollbar mb-auto"
       >
         {project.techStack?.map((tech, i) => (
           <div

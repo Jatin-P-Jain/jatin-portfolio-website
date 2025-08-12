@@ -130,7 +130,7 @@ export default function WorkExperienceSection() {
                             alt={`Logo ${idx + 1}`}
                             fill
                             sizes="1024px"
-                            className="rounded-lg object-cover hover:scale-200 transition-transform duration-300 hover:z-10 border-3 border-yellow-50 ring-2 
+                            className="rounded-lg object-cover hover:scale-200 transition-transform duration-300 hover:z-10 border-3 border-yellow-50 ring-2 bg-sky-900
                             ring-gray-600"
                             onLoad={() => setLoading(false)}
                           />

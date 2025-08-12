@@ -32,6 +32,7 @@ import Vercel from "@/icons/icon-vercel.svg";
 import ShadcnUI from "@/icons/icon-shadcn.svg";
 import Google from "@/icons/icon-google.svg";
 import MSCLogo from "@/assets/images/msc-logo.svg";
+import HotHomesLogo from "@/assets/images/hot-homes-logo.svg";
 import LiveProjectCard from "@/components/custom-components/live-project-card";
 
 const liveProjects = [
@@ -70,10 +71,6 @@ const liveProjects = [
         logo_url: Firebase,
       },
       {
-        label: "Vercel",
-        logo_url: Vercel,
-      },
-      {
         label: "Google One Tap",
         logo_url: Google,
       },
@@ -81,20 +78,45 @@ const liveProjects = [
         label: "WhatsApp API",
         logo_url: Whatsapp,
       },
+      {
+        label: "Vercel",
+        logo_url: Vercel,
+      },
     ],
     link: "https://meghasalescorporation.in/",
     demoVideo: "/videos/megha-sales-corporation.mp4",
   },
   {
-    projectLogo: MSCLogo,
+    projectLogo: HotHomesLogo,
     name: "Hot Homes",
     description:
-      "A modern real estate portal for Hot Homes that enables property listing, search, and virtual tours for home buyers and sellers. Focused on fast navigation, rich visuals, and easy lead management.",
+      "A learning project built to explore Next.js with Firebase, where the app catalogs homes for sale with prices, addresses, and amenities. Users can browse and filter properties, while admins manage listings via a separate role-based interface.",
     highlights: [
-      "Real-time search and filter for properties",
-      "Integrated Google Maps for locations",
-      "Image galleries & virtual tour support",
-      "Secure inquiry and contact forms",
+      "Users can favourite homes for quick access",
+      "Login with Google for easy authentication",
+      "Google Maps integration for property locations",
+    ],
+    techStack: [
+      {
+        label: "Next.js",
+        logo_url: NextJs,
+      },
+      {
+        label: "React",
+        logo_url: React,
+      },
+      {
+        label: "shadcn/ui",
+        logo_url: ShadcnUI,
+      },
+      {
+        label: "Tailwind CSS",
+        logo_url: TailwindCss,
+      },
+      {
+        label: "Firebase",
+        logo_url: Firebase,
+      },
     ],
     link: "https://hot-homes.jatinprakash.online/",
     demoVideo: "/videos/hot-homes-demo.mp4",
