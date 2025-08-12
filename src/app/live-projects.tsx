@@ -23,22 +23,70 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import NextJs from "@/icons/icon-nextjs.svg";
+import React from "@/icons/icon-react.svg";
+import TailwindCss from "@/icons/icon-tailwindcss.svg";
+import Firebase from "@/icons/icon-firebase.svg";
+import Whatsapp from "@/icons/icon-whatsapp.svg";
+import Vercel from "@/icons/icon-vercel.svg";
+import ShadcnUI from "@/icons/icon-shadcn.svg";
+import Google from "@/icons/icon-google.svg";
+import MSCLogo from "@/assets/images/msc-logo.svg";
+import LiveProjectCard from "@/components/custom-components/live-project-card";
 
 const liveProjects = [
   {
+    projectLogo: MSCLogo,
     name: "Megha Sales Corporation",
     description:
-      "A scalable web platform for Megha Sales Corporation to manage orders, inventory, and customer relationships efficiently. Enables real-time reporting and streamlined business workflows for a modern B2B experience.",
+      "An enterprise-level PWA built for an autoparts wholesaler managing 9–10 leading brands. The platform streamlines product cataloging and online ordering, replacing the traditional manual process with a fully digital, real-time solution.",
     highlights: [
-      "Mobile-friendly UI/UX for field agents and managers",
-      "Live inventory and order tracking",
-      "Role-based dashboard with analytics",
-      "Integrations with payment gateways and SMS/email notifications",
+      "Fully responsive and installable Progressive Web App (PWA)",
+      "Role-based access with separate Admin and User interfaces",
+      "Google One Tap sign-in for seamless authentication",
+      "WhatsApp notifications for instant order updates",
+      "Instant search and filtering for quick product discovery",
+      "Secure user session management with persistent login",
+    ],
+    techStack: [
+      {
+        label: "Next.js 15",
+        logo_url: NextJs,
+      },
+      {
+        label: "React",
+        logo_url: React,
+      },
+      {
+        label: "shadcn/ui",
+        logo_url: ShadcnUI,
+      },
+      {
+        label: "Tailwind CSS",
+        logo_url: TailwindCss,
+      },
+      {
+        label: "Firebase",
+        logo_url: Firebase,
+      },
+      {
+        label: "Vercel",
+        logo_url: Vercel,
+      },
+      {
+        label: "Google One Tap",
+        logo_url: Google,
+      },
+      {
+        label: "WhatsApp API",
+        logo_url: Whatsapp,
+      },
     ],
     link: "https://meghasalescorporation.in/",
     demoVideo: "/videos/megha-sales-corporation.mp4",
   },
   {
+    projectLogo: MSCLogo,
     name: "Hot Homes",
     description:
       "A modern real estate portal for Hot Homes that enables property listing, search, and virtual tours for home buyers and sellers. Focused on fast navigation, rich visuals, and easy lead management.",
@@ -74,58 +122,13 @@ export default function LiveProjectsDialog() {
 
   // Shared project content
   const content = liveProjects.map((proj) => (
-    <div
-      key={proj.name}
-      className="bg-gray-50 rounded-3xl p-4 border border-gray-200 shadow-md md:min-w-[90%] h-full flex flex-col"
-    >
-      <h3 className="text-lg md:text-xl font-bold mb-2">{proj.name}</h3>
-      <p className="text-xs text-gray-400">About the Project</p>
-      <div className="flex max-h-[150px] flex-col gap-2 overflow-auto mb-4 px-4 text-justify">
-        <p className="text-gray-600 text-sm">{proj.description}</p>
-        <ul className="list-disc list-inside flex flex-col gap-1 text-sm">
-          {proj.highlights.map((h, i) => (
-            <li key={i} className="text-gray-700">
-              {h}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <p className="text-xs text-gray-400">Technologies Used</p>
-      <div className="flex  gap-2 overflow-auto mb-4 text-justify px-4">
-        <ul className="list-disc list-inside flex flex-col gap-1 text-sm">
-          {proj.highlights.map((h, i) => (
-            <li key={i} className="text-gray-700">
-              {h}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {/* ---- Insert video or GIF here ---- */}
-      <div className="w-full flex justify-center items-center mb-4">
-        {/* MP4 video (recommended for fast load and control) */}
-        <video
-          src={proj.demoVideo} // proj.demoVideo should be the URL/path to your small video or GIF
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="rounded-md shadow w-full max-w-[400px] object-contain"
-          preload="auto"
-          //   poster={proj.demoPoster} // optional poster image
-        />
-      </div>
-      <Button asChild className="mt-auto">
-        <a href={proj.link} target="_blank" rel="noopener noreferrer">
-          Explore Project <ExternalLink className="inline w-4 h-4 ml-1" />
-        </a>
-      </Button>
-    </div>
+    <LiveProjectCard project={proj} key={proj.name} />
   ));
 
   return (
     <div>
       {/* Desktop Dialog */}
-      {(isDesktop || isLargeDesktop) && (
+      {(isLargeDesktop || isDesktop) && (
         <div className="hidden lg:block">
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -137,11 +140,11 @@ export default function LiveProjectsDialog() {
                 Live Projects <MonitorDotIcon className="size-5 ml-1" />
               </Button>
             </DialogTrigger>
-            <DialogContent className=" max-w-3xl">
+            <DialogContent className="!max-w-4xl w-[80vw] gap-0">
               <DialogTitle className="">Recent Live Projects</DialogTitle>
               <Carousel
                 orientation="horizontal"
-                className="gap-6 flex flex-col w-full"
+                className="flex flex-col w-full"
                 setApi={setApi}
               >
                 <CarouselContent className="py-4 px-2">
@@ -174,7 +177,7 @@ export default function LiveProjectsDialog() {
       )}
 
       {/* Mobile Drawer */}
-      {(!isDesktop || !isLargeDesktop) && (
+      {!isDesktop && (
         <div className="lg:hidden">
           <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
@@ -186,11 +189,11 @@ export default function LiveProjectsDialog() {
                 Live Projects <MonitorDotIcon className="size-5 ml-1" />
               </Button>
             </DrawerTrigger>
-            <DrawerContent className="p-4 pb-6 !min-h-fit flex items-start justify-between">
+            <DrawerContent className="p-4 pb-5 !min-h-fit flex items-start justify-between">
               <DrawerTitle className="">Recent Live Projects</DrawerTitle>
               <Carousel
                 orientation="horizontal"
-                className="gap-6 flex flex-col w-full"
+                className="gap-4 flex flex-col w-full"
                 setApi={setApi}
               >
                 <CarouselContent className="py-2 px-1">
