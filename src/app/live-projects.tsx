@@ -13,7 +13,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { MonitorDotIcon, ExternalLink } from "lucide-react";
+import { MonitorDotIcon } from "lucide-react";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import {
   Carousel,
