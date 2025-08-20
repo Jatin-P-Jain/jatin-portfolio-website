@@ -98,7 +98,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
         ref={descRef}
         className="flex max-h-[150px] flex-col gap-2 overflow-auto mt-1 px-4 text-justify"
       >
-        <p className="text-gray-600 text-sm">{project.description}</p>
+        <p className="text-gray-600 text-xs md:text-sm">{project.description}</p>
       </div>
       <span className="text-[8px] text-gray-400 italic px-4 text-center">
         {" "}
@@ -115,7 +115,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
         ref={featuresRef}
         className="flex gap-1 overflow-auto mt-1 text-justify px-4 max-h-25 md:max-h-40 flex-col no-scrollbar"
       >
-        <ul className="list-disc list-inside flex flex-col gap-0 md:gap-1 text-sm">
+        <ul className="list-disc list-inside flex flex-col gap-0 md:gap-1 text-xs md:text-sm">
           {project.highlights.map((h, i) => (
             <li key={i} className="text-gray-600">
               {h}
@@ -133,10 +133,10 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
       </span>
 
       {/* Tech Stack */}
-      <p className="text-xs text-gray-400 mt-2">Tech Stack</p>
+      <p className="text-xs text-gray-400 mt-0">Tech Stack</p>
       <div
         ref={techRef}
-        className="flex gap-2 overflow-auto mt-1 text-justify px-3 text-gray-600 flex-wrap py-2 max-h-25 md:max-h-40 no-scrollbar mb-auto"
+        className="flex gap-2 overflow-auto mt-1 text-justify px-3 text-gray-600 flex-wrap py-2 max-h-40 md:max-h-40 no-scrollbar mb-auto"
       >
         {project.techStack?.map((tech, i) => (
           <div

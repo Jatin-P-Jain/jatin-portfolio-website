@@ -1,77 +1,19 @@
 "use client";
 import Image from "next/image";
-import { MapPin, DotIcon, ChevronsUp } from "lucide-react";
+import { MapPin, DotIcon } from "lucide-react";
 import LinkedIn from "@/icons/linkedin.svg";
 import Github from "@/icons/github.svg";
-import CallAnimated from "@/icons/call-animated.gif";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import HeroProfile from "@/components/custom-components/hero-profile";
-import { useEffect, useState, useRef } from "react";
+import CallAnimated from "@/icons/call-animated.gif";
+
 import clsx from "clsx";
 
 export default function Hero() {
   const { isMobile } = useBreakpoint();
-  const [hydrated, setHydrated] = useState(false);
-  const [isFloating, setIsFloating] = useState(false);
-  const heroRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (hydrated && heroRef.current) {
-      // You can perform any actions with heroRef.current here after hydration
-      if (heroRef.current) {
-        // observer code here
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            setIsFloating(!entry.isIntersecting);
-          },
-          { threshold: 0 }
-        );
-        observer.observe(heroRef.current);
-        return () => observer.disconnect();
-      }
-    }
-  }, [hydrated]);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-
-  if (!hydrated) return null;
 
   return (
-    <div
-      ref={heroRef}
-      className="flex flex-col md:flex-row items-center justify-between w-full px-8 py-8 pb-12 lg:px-16 xl:px-0 max-w-6xl h-full mx-auto gap-12 my-auto"
-    >
-      <div
-        className={
-          "flex flex-col gap-3 md:gap-4 fixed bottom-8 right-8 md:right-16 z-50 justify-end items-end opacity-0 transition-all duration-300 -translate-y-10" +
-          (isFloating ? " opacity-100 translate-y-0" : "")
-        }
-      >
-        <div
-          className="text-sm flex w-fit p-1 px-4 gap-2 justify-center items-center text-gray-600 bg-gray-100 border-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <ChevronsUp className="size-5" />
-          {isMobile ? "" : "Scroll to top"}
-        </div>
-        <a
-          href="#contact-offset"
-          aria-label="Github"
-          className="bg-gradient-to-br from-amber-400 via-amber-300 to-amber-400 md:ml-auto flex items-center gap-2 rounded-lg px-2 md:px-3 md:py-1 border-2 border-amber-300/40 hover:bg-amber-300/40 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 dark:shadow-gray-400"
-        >
-          <div className={clsx("relative w-8 h-8")}>
-            <Image
-              src={CallAnimated}
-              alt="Connect with me"
-              fill
-              sizes="150px"
-            />
-          </div>
-          <span className="font-semibold text-black/90">Contact / Hire Me</span>
-        </a>
-      </div>
+    <div className="flex flex-col md:flex-row items-center justify-between w-full px-8 py-8 pb-12 lg:px-16 xl:px-0 max-w-6xl h-full mx-auto gap-12 my-auto">
       <div className="flex flex-col items-start justify-center text-left gap-8 md:gap-8">
         <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-2 w-full">
           Hi, I&apos;m Jatin 👋
