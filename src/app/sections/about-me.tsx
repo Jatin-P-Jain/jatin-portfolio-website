@@ -67,7 +67,7 @@ export default function AboutMe() {
           </p>
           <p>Some highlights about me:</p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 list-disc list-inside text-sm text-left">
-            <li>B.E. in Computer Science Engineering</li>
+            <li>B.E. in Computer Science Engineering from VTU</li>
             <li>GATE-2021 qualified | AIR 1958 (604 score)</li>
             <li>4+ years of experience in web and mobile development</li>
             <li>Passionate about building user-friendly, accessible apps</li>
