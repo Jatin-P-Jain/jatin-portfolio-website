@@ -77,8 +77,9 @@ export default function Navbar() {
         <div className="h-6 w-0.5 bg-gray-200 mx-2"></div>
         <Button className="px-5 py-2 font-medium cursor-pointer" asChild>
           <Link
-            href={"/Jatin_Jain_Frontend-Developer_2025.pdf"}
+            href={"https://drive.google.com/file/d/15d_m4uBGsdNrOfXA0oRDXsTVbHrKjyux/view?usp=sharing"}
             target="_blank"
+            rel="noopener noreferrer"
             download={"Jatin_Jain_Frontend-Developer_2025.pdf"}
           >
             Download Resume <DownloadIcon className="w-4 h-4 ml-1" />
