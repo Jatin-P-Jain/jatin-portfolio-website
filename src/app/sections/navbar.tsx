@@ -12,6 +12,7 @@ import { useTheme } from "next-themes";
 import { Separator } from "@/components/ui/separator";
 import LiveProjectsDialog from "../live-projects";
 import Link from "next/link";
+import ShinyText from "@/components/ShinyText";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -75,14 +76,18 @@ export default function Navbar() {
       <nav className="hidden lg:flex items-center gap-1 xl:gap-4 justify-center">
         {navLinks}
         <div className="h-6 w-0.5 bg-gray-200 mx-2"></div>
+
         <Button className="px-5 py-2 font-medium cursor-pointer" asChild>
           <Link
-            href={"https://drive.google.com/file/d/15d_m4uBGsdNrOfXA0oRDXsTVbHrKjyux/view?usp=sharing"}
+            href={
+              "https://drive.google.com/file/d/15d_m4uBGsdNrOfXA0oRDXsTVbHrKjyux/view?usp=sharing"
+            }
             target="_blank"
             rel="noopener noreferrer"
             download={"Jatin_Jain_Frontend-Developer_2025.pdf"}
           >
-            Download Resume <DownloadIcon className="w-4 h-4 ml-1" />
+            <ShinyText text="Download Resume" speed={3} className="text-gray-200" />
+            <DownloadIcon className="w-4 h-4 ml-1" />
           </Link>
         </Button>
         <div className="h-6 w-0.5 bg-gray-200 mx-2"></div>

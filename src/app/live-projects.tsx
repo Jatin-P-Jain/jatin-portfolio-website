@@ -34,6 +34,7 @@ import Google from "@/icons/icon-google.svg";
 import MSCLogo from "@/assets/images/msc-logo.svg";
 import HotHomesLogo from "@/assets/images/hot-homes-logo.svg";
 import LiveProjectCard from "@/components/custom-components/live-project-card";
+import ShinyText from "@/components/ShinyText";
 
 const liveProjects = [
   {
@@ -159,7 +160,12 @@ export default function LiveProjectsDialog() {
                 variant={"outline"}
                 size={"sm"}
               >
-                Live Projects <MonitorDotIcon className="size-5 ml-1" />
+                <ShinyText
+                  text="Live Projects"
+                  speed={1}
+                  className="text-sky-800"
+                />
+                <MonitorDotIcon className="size-5 ml-1" />
               </Button>
             </DialogTrigger>
             <DialogContent className="!max-w-4xl w-[80vw] gap-0">
