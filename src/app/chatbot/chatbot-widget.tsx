@@ -253,19 +253,6 @@ function ContactBlock({ contact }: { contact?: Contact }) {
           >
             {contact.phone}
           </a>
-          <span className="">|</span>
-          <a
-            className="text-green-700 hover:underline font-semibold flex items-center gap-1 text-sm  focus-visible:outline-2 focus-visible:outline-emerald-400 rounded"
-            href={waHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open WhatsApp chat"
-          >
-            <Image src={Whatsapp} alt="WhatsApp" width={20} height={20} />
-            <span className="inline-flex items-center gap-1">
-              WhatsApp <span aria-hidden>↗</span>
-            </span>
-          </a>
         </div>
       )}
 
@@ -285,6 +272,21 @@ function ContactBlock({ contact }: { contact?: Contact }) {
           </a>
         </div>
       )}
+      <a
+        className="text-green-700 hover:underline font-semibold flex items-center gap-1 text-sm  focus-visible:outline-2 focus-visible:outline-emerald-400 rounded"
+        href={waHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Open WhatsApp chat"
+      >
+        <span className="text-xs text-muted-foreground">
+          Let's Chat on{" "}
+        </span>
+        <Image src={Whatsapp} alt="WhatsApp" width={20} height={20} />
+        <span className="inline-flex items-center gap-1">
+          WhatsApp <span aria-hidden>↗</span>
+        </span>
+      </a>
     </div>
   );
 }
