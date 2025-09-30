@@ -14,7 +14,6 @@ import Whatsapp from "@/icons/icon-whatsapp.svg";
 import LinkedIn from "@/icons/linkedin.svg";
 
 // NEW: add near the top imports
-import { Badge } from "@/components/ui/badge"; // shadcn/ui badge
 import { ExternalLink } from "lucide-react"; // for Explore link icon
 // If not used elsewhere, you can remove this import
 // import { useBreakpoint } from "@/hooks/useBreakPoints";
@@ -280,7 +279,7 @@ function ContactBlock({ contact }: { contact?: Contact }) {
         aria-label="Open WhatsApp chat"
       >
         <span className="text-xs text-muted-foreground">
-          Let's Chat on{" "}
+          Let&apos;s Chat on{" "}
         </span>
         <Image src={Whatsapp} alt="WhatsApp" width={20} height={20} />
         <span className="inline-flex items-center gap-1">
@@ -291,12 +290,7 @@ function ContactBlock({ contact }: { contact?: Contact }) {
   );
 }
 
-export default function ChatBotWidget({
-  collapsed = false,
-}: {
-  collapsed?: boolean;
-  isMobile: boolean;
-}) {
+export default function ChatBotWidget({}: { isMobile: boolean }) {
   const { isMobile } = useBreakpoint();
   const [open, setOpen] = useState(false);
   const [explored, setExplored] = useState(false);

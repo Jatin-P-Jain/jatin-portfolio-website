@@ -9,15 +9,12 @@ import CertificationsList from "./sections/certifications";
 import ContactSection from "./sections/contact";
 import { ChevronsUp } from "lucide-react";
 import clsx from "clsx";
-import Image from "next/image";
-import CallAnimated from "@/icons/call-animated.gif";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import ChatBotWidget from "./chatbot/chatbot-widget";
 
 export default function PageWrapper() {
   const { isMobile } = useBreakpoint();
   const [isFloating, setIsFloating] = useState(false);
-  const [isContactSection, setIsContactSection] = useState(false);
   const heroRef = useRef<HTMLDivElement | null>(null);
   const contactRef = useRef<HTMLDivElement | null>(null);
   const [hydrated, setHydrated] = useState(false);
@@ -45,20 +42,9 @@ export default function PageWrapper() {
       heroObserver.observe(heroRef.current);
     }
 
-    // Set up observer for contact section
-    let contactObserver: IntersectionObserver | undefined;
-    if (contactRef.current) {
-      contactObserver = new IntersectionObserver(
-        ([entry]) => setIsContactSection(entry.isIntersecting),
-        { threshold: 0 }
-      );
-      contactObserver.observe(contactRef.current);
-    }
-
     // Cleanup both
     return () => {
       if (heroObserver && heroRef.current) heroObserver.disconnect();
-      if (contactObserver && contactRef.current) contactObserver.disconnect();
     };
   }, [hydrated]);
 
@@ -132,7 +118,7 @@ export default function PageWrapper() {
             Contact / Hire Me
           </span>
         </a> */}
-        <ChatBotWidget collapsed={collapsed} isMobile={isMobile} />
+        <ChatBotWidget isMobile={isMobile} />
       </div>
       <section
         className="w-full flex flex-col md:flex-row items-center md:items-start justify-between gap-12 min-h-[92vh]"

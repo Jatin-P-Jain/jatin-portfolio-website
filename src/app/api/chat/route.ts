@@ -30,7 +30,6 @@ const linkCatalog = [
 function pickLinks(query: string, k = 3) {
   const q = (query || "").toLowerCase();
   const scored = linkCatalog.map((item) => {
-    const hay = (item.title + " " + item.tags.join(" ")).toLowerCase();
     const score =
       (item.title.toLowerCase().includes(q) ? 2 : 0) +
       item.tags.reduce((s, t) => s + (q.includes(t.toLowerCase()) ? 1 : 0), 0);
@@ -128,9 +127,9 @@ POLICY:
     // response.text is JSON per responseMimeType config
     const data = JSON.parse(response.text ?? "{}");
     return NextResponse.json(data);
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { error: err?.message ?? "Unknown error" },
+      { error: (err as Error)?.message ?? "Unknown error" },
       { status: 500 }
     );
   }

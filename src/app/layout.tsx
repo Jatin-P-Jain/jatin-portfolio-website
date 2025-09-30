@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "./sections/navbar";
-import ChatBotWidget from "./chatbot/chatbot-widget";
 
 const inter = Inter({
   variable: "--font-inter ",
@@ -28,7 +27,6 @@ export default function RootLayout({
         <ThemeProvider attribute="class" enableSystem>
           <Navbar />
           {children}
-          {/* <ChatBotWidget /> */}
         </ThemeProvider>
       </body>
     </html>
