@@ -348,7 +348,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
   return (
     <>
       {/* Button container: mobile bottom-0 left-0; desktop keeps prior offsets */}
-      <div className="fixed bottom-6 left-8 md:bottom-4 md:left-8 lg:left-16 lg:bottom-8 z-[10] flex md:flex-row items-center gap-1 md:gap-2 ">
+      <div className="fixed bottom-8 left-8 md:bottom-4 md:left-8 lg:left-16 lg:bottom-8 z-[10] flex md:flex-row items-center gap-1 md:gap-2 ">
         <button
           type="button"
           aria-label={open ? "Close chat" : "Open chat"}
@@ -361,12 +361,12 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
           className="hover:bg-none cursor-pointer flex flex-col items-center gap-2"
         >
           {open ? (
-            <div className="flex items-center gap-1 py-2 bg-gray-default rounded-full text-orange-700 border-orange-600 border-1 text-xs px-2">
+            <div className="flex items-center gap-1 py-2 bg-gray-100 dark:bg-gray-700 rounded-full text-orange-700 border-orange-600 border-1 text-xs px-2">
               <X className=" h-4 w-4 " />
               Close
             </div>
           ) : (
-            <Avatar className="h-14 w-14 md:h-16 md:w-16 ring-1 ring-sky-700 dark:ring-sky-100 shadow-2xl">
+            <Avatar className="h-14 w-14 md:h-16 md:w-16 ring-1 ring-sky-700 dark:ring-sky-100 shadow-2xl bg-white">
               <AvatarImage
                 src={ChatbotAvatar.src}
                 alt="Owner avatar"
@@ -426,11 +426,11 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
           !open && "!h-0 border-0 !p-0 opacity-0 pointer-events-none",
           // Mobile: to the right of the 64px button + 8px gap => 72px
           // Desktop: original placement
-          "fixed bottom-16 left-8 md:bottom-14 md:left-8 lg:left-16 lg:bottom-18",
+          "fixed bottom-20 left-8 md:bottom-14 md:left-8 lg:left-16 lg:bottom-18",
           // Sizing
           "w-[80%] max-w-100 sm:w-96 h-120 max-h-150",
           // Styling
-          "bg-white dark:bg-neutral-900 border rounded-lg shadow-2xl flex flex-col overflow-hidden z-[99999] transition-all duration-300 ease-in-out"
+          "border-2 bg-gray-100 dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col overflow-hidden z-[99999] transition-all duration-300 ease-in-out"
         )}
       >
         <div className="px-4 py-1 border-b border-neutral-200 dark:border-neutral-800 font-medium">
@@ -452,7 +452,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
             <div className="space-y-3">
               {/* Brief intro */}
               <p className="text-sm text-neutral-700 dark:text-neutral-300">
-                Hi—this is Jatin’s Assistant. Quick answers on skills, projects,
+                Hello! 😎 This is Jatin’s Assistant. Quick answers on skills, projects,
                 and availability.
               </p>
 
