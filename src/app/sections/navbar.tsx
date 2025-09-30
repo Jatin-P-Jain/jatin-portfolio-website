@@ -86,7 +86,11 @@ export default function Navbar() {
             rel="noopener noreferrer"
             download={"Jatin_Jain_Frontend-Developer_2025.pdf"}
           >
-            <ShinyText text="Download Resume" speed={3} className="text-gray-200" />
+            <ShinyText
+              text="Download Resume"
+              speed={3}
+              className="text-gray-200"
+            />
             <DownloadIcon className="w-4 h-4 ml-1" />
           </Link>
         </Button>
@@ -94,7 +98,7 @@ export default function Navbar() {
         <Button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           variant="ghost"
-          className="flex items-center gap-1 !p-2 cursor-pointer flex-col justify-center"
+          className="flex items-center gap-1 !p-2 cursor-pointer flex-col justify-center hover:bg-transparent"
         >
           {theme === "dark" ? (
             <div className="flex items-center gap-2 flex-col justify-center ">
