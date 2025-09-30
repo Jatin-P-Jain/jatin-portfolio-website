@@ -354,7 +354,7 @@ export default function ChatBotWidget({
   return (
     <>
       {/* Button container: mobile bottom-0 left-0; desktop keeps prior offsets */}
-      <div className="fixed bottom-6 left-8 md:bottom-4 md:left-8 lg:left-16 lg:bottom-8 z-[99999] flex md:flex-row items-center gap-1 md:gap-2 ">
+      <div className="fixed bottom-6 left-8 md:bottom-4 md:left-8 lg:left-16 lg:bottom-8 z-[10] flex md:flex-row items-center gap-1 md:gap-2 ">
         <button
           type="button"
           aria-label={open ? "Close chat" : "Open chat"}
