@@ -42,11 +42,11 @@ export default function AboutMe() {
           </h2>
           <p className="">
             Hey there! I&apos;m Jatin Prakash Jain—a frontend & mobile developer
-            and tech explorer from Udaipur, Rajasthan, aged 27.
+            and tech explorer from Udaipur, Rajasthan, aged 27 based in Bangalore currently.
           </p>
           <p className="">
             For over 4 years, I&apos;ve transformed ideas into user-focused apps
-            using modern tech. My favorite web stack is Next.js integrated with
+            using modern tech. Recent web stack that I use is Next.js integrated with
             Firebase, enabling scalable backends, seamless authentication, and
             real-time features. From Google Maps to OTP-auth, I build robust
             Progressive Web Apps for enterprise clients.
@@ -67,7 +67,7 @@ export default function AboutMe() {
           </p>
           <p>Some highlights about me:</p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 list-disc list-inside text-sm text-left">
-            <li>B.E. in Computer Science Engineering from VTU</li>
+            <li>B.E. in Computer Science Engineering from Bangalore (VTU)</li>
             <li>GATE-2021 qualified | AIR 1958 (604 score)</li>
             <li>4+ years of experience in web and mobile development</li>
             <li>Passionate about building user-friendly, accessible apps</li>

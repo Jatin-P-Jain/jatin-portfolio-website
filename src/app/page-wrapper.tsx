@@ -12,6 +12,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import CallAnimated from "@/icons/call-animated.gif";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
+import ChatBotWidget from "./chatbot/chatbot-widget";
 
 export default function PageWrapper() {
   const { isMobile } = useBreakpoint();
@@ -74,13 +75,16 @@ export default function PageWrapper() {
       }
     >
       <div
-        className={
-          "flex flex-col gap-3 md:gap-4 fixed bottom-8 right-8 md:right-16 z-50 justify-end items-end opacity-0 transition-all duration-300 -translate-y-10" +
-          (isFloating ? " opacity-100 translate-y-0" : "")
-        }
+      // className={
+      //   "flex flex-col gap-3 md:gap-4 fixed bottom-8 right-8 md:right-16 z-50 justify-end items-end opacity-0 transition-all duration-300 -translate-y-10" +
+      //   (isFloating ? " opacity-100 translate-y-0" : "")
+      // }
       >
         <div
-          className="text-sm flex w-fit p-1 px-4 justify-center items-center text-gray-600 bg-gray-100 border-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+          className={
+            "opacity-0 -translate-y-10 fixed bottom-8 right-8 md:right-16 z-50 text-sm flex w-fit p-1 px-4 justify-center items-center text-gray-600 bg-gray-100 border-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300" +
+            (isFloating ? " opacity-100 translate-y-0" : "")
+          }
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <ChevronsUp className="size-5" />
@@ -96,11 +100,11 @@ export default function PageWrapper() {
           </span>
           {/* Scroll to top */}
         </div>
-        <a
+        {/* <a
           href="#contact-offset"
           aria-label="Github"
           className={clsx(
-            "bg-gradient-to-br from-amber-400 via-amber-300 to-amber-400 flex items-center rounded-lg px-3 py-1 border-2 border-amber-300/40 shadow-lg hover:shadow-xl hover:scale-105 dark:shadow-gray-400 transition-all duration-300",
+            "mb-14 bg-gradient-to-br from-amber-400 via-amber-300 to-amber-400 flex items-center rounded-lg px-3 py-1 border-2 border-amber-300/40 shadow-lg hover:shadow-xl hover:scale-105 dark:shadow-gray-400 transition-all duration-300",
             isContactSection
               ? "opacity-0 pointer-events-none translate-y-4"
               : "opacity-100 pointer-events-auto translate-y-0",
@@ -127,7 +131,8 @@ export default function PageWrapper() {
           >
             Contact / Hire Me
           </span>
-        </a>
+        </a> */}
+        <ChatBotWidget collapsed={collapsed} isMobile={isMobile} />
       </div>
       <section
         className="w-full flex flex-col md:flex-row items-center md:items-start justify-between gap-12 min-h-[92vh]"
@@ -192,7 +197,7 @@ export default function PageWrapper() {
         ></div>
         <ContactSection />
       </section>
-      <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-1 px-8">
+      <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-1 px-8 pb-20 md:pb-4">
         <p className="text-gray-600 text-sm text-center w-full md:w-fit">
           Made with ❤️ and NextJS 15 | Shadcn UI | Tailwind CSS by Jatin Praksh
           Jain.
