@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ChatbotAvatar from "@/assets/images/chatbot-avatar.png";
 import {
-  ChevronDown,
   ChevronDownIcon,
   ChevronsLeftIcon,
   ChevronUpIcon,
