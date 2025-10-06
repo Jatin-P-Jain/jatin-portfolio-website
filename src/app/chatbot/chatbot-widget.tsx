@@ -9,6 +9,7 @@ import {
   ChevronDownIcon,
   ChevronsLeftIcon,
   ChevronUpIcon,
+  DownloadIcon,
   RefreshCwIcon,
   Send,
   X,
@@ -112,6 +113,32 @@ const PROJECTS: Record<Project["key"], Project> = {
 };
 
 const GITHUB_URL = "https://github.com/Jatin-P-Jain?tab=repositories";
+const RESUME_URL =
+  "https://drive.google.com/file/d/15d_m4uBGsdNrOfXA0oRDXsTVbHrKjyux/view?usp=sharing";
+
+// 1) Detect if the assistant is discussing resume/CV;
+function mentionsResume(msg: ChatMessage): boolean {
+  const t = (msg.content || "").toLowerCase();
+  if (/(resume|curriculum vitae|cv)\b/.test(t)) return true;
+  const links = msg.links || [];
+  return links.some((l) => /resume|cv|\.pdf/i.test(`${l.title} ${l.url}`));
+}
+
+// 2) CTA button
+function ResumeCTA() {
+  return (
+    <a
+      href={RESUME_URL}
+      download
+      className="mt-3 inline-flex items-center justify-center gap-2 rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 focus-visible:outline-2 focus-visible:outline-sky-400"
+      aria-label="Download Resume"
+      target="_blank"
+    >
+      Download Resume
+      <DownloadIcon className="w-4 h-4 ml-1" />
+    </a>
+  );
+}
 
 // 2) Simple project extraction (by URL match from content or links)
 function extractProjectsFromMessage(msg: ChatMessage): Project[] {
@@ -147,7 +174,7 @@ function getLeadSentence(text: string): string {
 // 4) Card UI (plain Tailwind; replace with shadcn Card if preferred)
 function ProjectCard({ p }: { p: Project }) {
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-default dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out">
+    <div className="rounded-lg border-1 border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out">
       <div className="p-4 space-y-2">
         <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
           {p.title}
@@ -247,7 +274,7 @@ function ContactBlock({ contact }: { contact?: Contact }) {
   const telHref = `tel:${(contact.phone || "").replace(/\s/g, "")}`;
   const waHref = `https://wa.me/${(contact.phone || "").replace(/\D/g, "")}`;
   return (
-    <div className="mt-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 shadow-md hover:shadow-lg transition-shadow space-y-2 text-xs text-gray-700 dark:text-gray-300">
+    <div className="mt-2 rounded-xl border-1 bg-gray-100 dark:bg-gray-700 p-4 shadow-md hover:shadow-lg transition-shadow space-y-2 text-xs text-gray-700 dark:text-gray-300">
       <div className="font-semibold flex w-full justify-center items-center text-gray-900 dark:text-gray-100 text-base tracking-tight">
         📬 Contact
       </div>
@@ -479,7 +506,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
             </span>
           </div>
           <Button
-            className="text-xs text-gray-500 "
+            className="text-xs text-gray-700"
             variant={"outline"}
             size={"sm"}
             onClick={() => {
@@ -506,8 +533,8 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
             pauseDuration={1500}
             showCursor={true}
             cursorCharacter="_"
-            textColors={["!text-sky-700/80"]}
-            className="!text-sky-700/80 font-medium text-xs"
+            // textColors={["!text-sky-700/80,text-sky-300"]}
+            className="!text-sky-700/80 dark:!text-sky-400/80 font-medium text-xs"
           />
 
           {messages.map((m, i) => {
@@ -543,11 +570,14 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                 {/* Assistant extras */}
                 {m.role === "assistant" && (
                   <>
+                    {mentionsResume(m) && <ResumeCTA />}
                     {/* Render project cards + one GitHub CTA if projects detected */}
                     {showProjects && <ProjectsBlock msg={m} />}
 
                     {/* If there are non-project links, you can still show them below */}
-                    {!showProjects && <LinksBlock links={m.links} />}
+                    {!showProjects && !mentionsResume(m) && (
+                      <LinksBlock links={m.links} />
+                    )}
 
                     <ContactBlock contact={m.contact} />
                   </>
@@ -582,7 +612,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                     variant={"outline"}
                     key={p}
                     onClick={() => sendMessage(undefined, p)}
-                    className="rounded-full border-1 px-2 md:px-3 text-[10px] md:text-xs transition border-sky-700 text-sky-700 hover:bg-sky-700 hover:text-white focus-visible:outline-2 focus-visible:outline-sky-400"
+                    className="rounded-full border-1 px-2 md:px-3 text-[10px] md:text-xs transition border-sky-700 text-sky-700 dark:text-sky-400 hover:bg-sky-700 hover:text-white focus-visible:outline-2 focus-visible:outline-sky-400"
                     aria-label={`Ask: ${p}`}
                   >
                     {p}
