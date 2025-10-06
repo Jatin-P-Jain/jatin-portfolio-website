@@ -5,7 +5,15 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ChatbotAvatar from "@/assets/images/chatbot-avatar.png";
-import { ChevronsLeftIcon, Send, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronDownIcon,
+  ChevronsLeftIcon,
+  ChevronUpIcon,
+  RefreshCwIcon,
+  Send,
+  X,
+} from "lucide-react";
 import clsx from "clsx";
 import TextType from "@/components/TextType";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
@@ -15,6 +23,8 @@ import LinkedIn from "@/icons/linkedin.svg";
 
 // NEW: add near the top imports
 import { ExternalLink } from "lucide-react"; // for Explore link icon
+import { Button } from "@/components/ui/button";
+import { sampleSize } from "@/lib/utils";
 // If not used elsewhere, you can remove this import
 // import { useBreakpoint } from "@/hooks/useBreakPoints";
 
@@ -24,6 +34,18 @@ const SUGGESTED_PROMPTS = [
   "What’s your tech stack?",
   "Are you available for new projects?",
   "Share contact details",
+  "Show live projects with links.",
+  "List core skills with ratings.",
+  "What’s your experience level?",
+  "What technologies do you specialize in?",
+  "What kind of projects have you worked on?",
+  "How can I contact you for work?",
+  "What are your preferred working hours?",
+  "What is your expected salary range?",
+  "Do you have a resume I can view?",
+  "Tell me about your recent work experience.",
+  "What are your strongest technical skills?",
+  "Can you provide links to your portfolio or GitHub?",
 ];
 
 type LinkItem = { title: string; url: string };
@@ -294,16 +316,30 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
   const { isMobile } = useBreakpoint();
   const [open, setOpen] = useState(false);
   const [explored, setExplored] = useState(false);
+  const [showQuickPrompts, setShowQuickPrompts] = useState(true);
+  const [quickPrompts, setQuickPrompts] = useState<string[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  const prevOpenRef = useRef(false);
+  useEffect(() => {
+    if (open && !prevOpenRef.current && listRef.current) {
+      // start at the top
+      listRef.current.scrollTop = 10;
+    }
+    prevOpenRef.current = open;
+  }, [open]);
 
   useEffect(() => {
-    if (open && listRef.current) {
-      listRef.current.scrollTop = listRef.current.scrollHeight;
-    }
-  }, [messages, open]);
+    if (open) setQuickPrompts(sampleSize(SUGGESTED_PROMPTS, 4));
+  }, [open]);
+
+  // useEffect(() => {
+  //   if (open && listRef.current) {
+  //     listRef.current.scrollTop = listRef.current.scrollHeight;
+  //   }
+  // }, [messages, open]);
 
   async function sendMessage(e?: React.FormEvent, message?: string) {
     e?.preventDefault();
@@ -336,6 +372,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
         ...nextMsgs,
         { role: "assistant", content: answer, links, contact },
       ]);
+      setQuickPrompts(sampleSize(SUGGESTED_PROMPTS, 4));
     } catch {
       setMessages([
         ...nextMsgs,
@@ -361,7 +398,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
           className="hover:bg-none cursor-pointer flex flex-col items-center gap-2"
         >
           {open ? (
-            <div className="flex items-center gap-1 py-2 bg-gray-100 dark:bg-gray-700 rounded-full text-orange-700 border-orange-600 border-1 text-xs px-2">
+            <div className="flex items-center gap-1 py-2 bg-gray-default dark:bg-gray-700 rounded-full text-orange-700 border-orange-600 border-1 text-xs px-2">
               <X className=" h-4 w-4 " />
               Close
             </div>
@@ -428,12 +465,12 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
           // Desktop: original placement
           "fixed bottom-20 left-8 md:bottom-14 md:left-8 lg:left-16 lg:bottom-18",
           // Sizing
-          "w-[80%] max-w-100 sm:w-96 h-120 max-h-150",
+          "w-[80%] md:max-w-120 min-h-130 md:min-h-150 max-h-160",
           // Styling
           "border-2 bg-gray-100 dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col overflow-hidden z-[99999] transition-all duration-300 ease-in-out"
         )}
       >
-        <div className="px-4 py-1 border-b border-neutral-200 dark:border-neutral-800 font-medium">
+        <div className="px-4 py-1 border-b border-neutral-200 dark:border-neutral-800 font-medium flex justify-between items-center">
           <div className="flex gap-2 flex-row items-center">
             <Avatar className="size-12">
               <AvatarImage src={ChatbotAvatar.src} className="flex" />
@@ -442,36 +479,38 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
               Jatin’s Assistant
             </span>
           </div>
+          <Button
+            className="text-xs text-gray-500 "
+            variant={"outline"}
+            size={"sm"}
+            onClick={() => {
+              setMessages([]);
+              setInput("");
+            }}
+          >
+            <RefreshCwIcon className="size-4 md:mr-1" />
+            {isMobile ? "" : "Refresh Chat"}
+          </Button>
         </div>
 
         <div
           ref={listRef}
-          className="flex-1 overflow-y-auto px-4 py-3 space-y-3"
+          className="flex-1 overflow-y-auto overflow-anchor-none px-4 py-3 space-y-3"
         >
-          {messages.length === 0 && (
-            <div className="space-y-3">
-              {/* Brief intro */}
-              <p className="text-sm text-neutral-700 dark:text-neutral-300">
-                Hello! 😎 This is Jatin’s Assistant. Quick answers on skills, projects,
-                and availability.
-              </p>
+          <TextType
+            text={[
+              "Hello! 😎 This is Jatin’s Assistant. Quick answers on skills, projects, and availability.",
+              "Try prompts below or ask anything about my work experience, skills, or projects.",
+            ]}
+            loop={true}
+            typingSpeed={200}
+            pauseDuration={1500}
+            showCursor={true}
+            cursorCharacter="_"
+            textColors={["!text-sky-700/80"]}
+            className="!text-sky-700/80 font-medium text-xs"
+          />
 
-              {/* Quick suggestions */}
-              <div className="flex flex-wrap gap-2 justify-end">
-                {SUGGESTED_PROMPTS.map((p) => (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => sendMessage(undefined, p)}
-                    className="rounded-full border border-neutral-300 dark:border-neutral-700 bg-white/70 dark:bg-neutral-900/60 px-3 py-1.5 text-xs text-neutral-800 dark:text-neutral-200 hover:bg-white dark:hover:bg-neutral-800 transition"
-                    aria-label={`Ask: ${p}`}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
           {messages.map((m, i) => {
             const isUser = m.role === "user";
             const projectsForMsg =
@@ -518,6 +557,41 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
             );
           })}
           {loading && <div className="loader ml-2"></div>}
+          {/* Quick suggestions */}
+          <div className="flex flex-col gap-4 px-4">
+            <div className="flex flex-row items-center justify-center w-full gap-4">
+              {/* <div className="flex h-0.5 w-full bg-gray-200 " /> */}
+              <div className="text-[10px] text-gray-400 flex justify-center items-center whitespace-nowrap">
+                Quick Suggestions
+              </div>
+              <div className="flex h-0.5 w-full bg-gray-200" />
+              <div
+                className="flex"
+                onClick={() => setShowQuickPrompts((v) => !v)}
+              >
+                {!showQuickPrompts ? (
+                  <ChevronDownIcon className="h-4 w-4 text-gray-400" />
+                ) : (
+                  <ChevronUpIcon className="h-4 w-4 text-gray-400" />
+                )}
+              </div>
+            </div>
+            {showQuickPrompts && (
+              <div className="flex flex-wrap gap-2 justify-end">
+                {quickPrompts.map((p) => (
+                  <Button
+                    variant={"outline"}
+                    key={p}
+                    onClick={() => sendMessage(undefined, p)}
+                    className="rounded-full border-1 px-2 md:px-3 text-[10px] md:text-xs transition border-sky-700 text-sky-700 hover:bg-sky-700 hover:text-white focus-visible:outline-2 focus-visible:outline-sky-400"
+                    aria-label={`Ask: ${p}`}
+                  >
+                    {p}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <form
