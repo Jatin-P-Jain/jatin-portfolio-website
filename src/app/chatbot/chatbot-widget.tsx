@@ -472,7 +472,6 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
               pauseDuration={1500}
               showCursor={true}
               cursorCharacter="|"
-              textColors={["text-sky-700"]}
               className={clsx(
                 open ? "hidden" : "block",
                 "!text-xs transition-opacity duration-300 ease-in-out select-none whitespace-nowrap rounded-2xl bg-gray-100 dark:bg-gray-900 px-4 py-2 text-[14px] text-shadow-xl font-semibold !text-sky-700 shadow-lg border-1"
