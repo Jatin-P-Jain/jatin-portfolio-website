@@ -22,7 +22,7 @@ type Project = {
 
 type LiveProjectCardProps = {
   project: Project;
-  isProjectsSection?: Boolean;
+  isProjectsSection?: boolean;
 };
 
 const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
@@ -173,7 +173,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
           {project.techStack
             ?.slice(0, project.techStack.length - 1)
             .map((tech, i) => (
-              <span className="text-xs flex justify-center items-center">
+              <span className="text-xs flex justify-center items-center" key={i}>
                 {tech.label} <DotIcon />{" "}
               </span>
             ))}
