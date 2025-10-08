@@ -2,7 +2,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { DotIcon, ExternalLink } from "lucide-react";
+import clsx from "clsx";
 
 type Tech = {
   logo_url: string;
@@ -21,9 +22,13 @@ type Project = {
 
 type LiveProjectCardProps = {
   project: Project;
+  isProjectsSection?: Boolean;
 };
 
-const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
+const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
+  project,
+  isProjectsSection = false,
+}) => {
   const [videoLoading, setVideoLoading] = useState(true);
 
   // refs for scrollable detection
@@ -77,7 +82,11 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
   return (
     <div
       key={project.name}
-      className="bg-gray-50 rounded-3xl p-4 border border-gray-200 shadow-md md:min-w-[90%] h-full flex flex-col"
+      className={clsx(
+        "bg-gray-50 rounded-3xl p-4 border border-gray-200 shadow-md md:min-w-[90%] h-full flex flex-col",
+        isProjectsSection &&
+          "rounded-xl bg-gray-default dark:bg-gray-100 p-4 md:p-6 lg:p-8 hover:scale-105 transition-transform duration-300 gap-1 shadow-sm"
+      )}
     >
       {/* Title */}
       <h3 className="text-lg md:text-xl font-bold mb-2 flex flex-row justify-start items-center gap-4">
@@ -89,7 +98,9 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
             className="object-contain"
           />
         </div>
-        <span className="flex h-full justify-center items-center">{project.name}</span>
+        <span className="flex h-full justify-center items-center text-gray-800">
+          {project.name}
+        </span>
       </h3>
 
       {/* Description */}
@@ -98,7 +109,9 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
         ref={descRef}
         className="flex max-h-[150px] flex-col gap-2 overflow-auto mt-1 px-4 text-justify"
       >
-        <p className="text-gray-600 text-xs md:text-sm">{project.description}</p>
+        <p className="text-gray-600 text-xs md:text-sm">
+          {project.description}
+        </p>
       </div>
       <span className="text-[8px] text-gray-400 italic px-4 text-center">
         {" "}
@@ -131,30 +144,44 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
             : "Scroll to see more ↓"
           : ""}
       </span>
-
       {/* Tech Stack */}
       <p className="text-xs text-gray-400 mt-0">Tech Stack</p>
-      <div
-        ref={techRef}
-        className="flex gap-2 overflow-auto mt-1 text-justify px-3 text-gray-600 flex-wrap py-2 max-h-40 md:max-h-40 no-scrollbar mb-auto"
-      >
-        {project.techStack?.map((tech, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-2 bg-gray-200 px-4 py-1 rounded-full text-sm shadow-md"
-          >
-            <div className="w-5 h-5 relative">
-              <Image
-                src={tech.logo_url}
-                alt="Tech Logo"
-                fill
-                className="object-contain"
-              />
+      {!isProjectsSection ? (
+        <div
+          ref={techRef}
+          className="flex gap-2 overflow-auto mt-1 text-justify px-3 text-gray-600 flex-wrap py-2 max-h-40 md:max-h-40 no-scrollbar mb-auto"
+        >
+          {project.techStack?.map((tech, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-2 bg-gray-200 px-4 py-1 rounded-full text-sm shadow-md"
+            >
+              <div className="w-5 h-5 relative">
+                <Image
+                  src={tech.logo_url}
+                  alt="Tech Logo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="text-xs">{tech.label}</span>
             </div>
-            <span className="text-xs">{tech.label}</span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="mb-auto flex gap-1 overflow-auto mt-1 text-justify px-4 text-gray-600 no-scrollbar flex-wrap">
+          {project.techStack
+            ?.slice(0, project.techStack.length - 1)
+            .map((tech, i) => (
+              <span className="text-xs flex justify-center items-center">
+                {tech.label} <DotIcon />{" "}
+              </span>
+            ))}
+          <span className="text-xs flex justify-center items-center">
+            {project?.techStack?.[project.techStack?.length - 1].label}
+          </span>
+        </div>
+      )}
       <span className="text-[8px] text-gray-400 italic px-4 text-center mb-3">
         {" "}
         {scrollFlags.tech
@@ -163,37 +190,52 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({ project }) => {
             : "Scroll to see more ↓"
           : ""}
       </span>
-
       {/* Video */}
-      <div className="relative w-full h-fit flex justify-center items-center mb-2 md:mb-4">
-        {videoLoading && (
-          <div className="flex items-center justify-center flex-col gap-2 absolute">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-400"></div>
-            <span className="ml-2 text-gray-600 text-xs">
-              Loading demo video...
-            </span>
+      {!isProjectsSection && (
+        <div className="relative w-full h-fit flex justify-center items-center mb-2 md:mb-4">
+          {videoLoading && (
+            <div className="flex items-center justify-center flex-col gap-2 absolute">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-400"></div>
+              <span className="ml-2 text-gray-600 text-xs">
+                Loading demo video...
+              </span>
+            </div>
+          )}
+          <div className="flex w-60 md:w-80 h-fit max-w-90 rounded-md overflow-hidden border-2 ring-2">
+            <video
+              src={project.demoVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="object-fill"
+              preload="auto"
+              onLoadedData={() => setVideoLoading(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="flex justify-between items-center">
+        {isProjectsSection && (
+          <div className="flex items-center font-semibold text-white text-sm bg-green-700/90 px-2 pr-5 rounded-2xl">
+            <DotIcon className="size-8 animate-pulse" /> Live
           </div>
         )}
-        <div className="flex w-60 md:w-80 h-fit max-w-90 rounded-md overflow-hidden border-2 ring-2">
-          <video
-            src={project.demoVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="object-fill"
-            preload="auto"
-            onLoadedData={() => setVideoLoading(false)}
-          />
-        </div>
-      </div>
 
-      {/* CTA */}
-      <Button asChild className="mt-auto">
-        <a href={project.link} target="_blank" rel="noopener noreferrer">
-          Explore Project <ExternalLink className="inline w-4 h-4 ml-1" />
-        </a>
-      </Button>
+        {/* CTA */}
+        <Button
+          asChild
+          className={clsx(
+            "w-full",
+            isProjectsSection && "w-fit flex justify-end bg-sky-800 text-white/95"
+          )}
+        >
+          <a href={project.link} target="_blank" rel="noopener noreferrer">
+            Explore Project <ExternalLink className="inline w-4 h-4 ml-1" />
+          </a>
+        </Button>
+      </div>
     </div>
   );
 };
