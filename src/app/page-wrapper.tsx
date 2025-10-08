@@ -188,9 +188,9 @@ export default function PageWrapper() {
           Made with ❤️ and NextJS 15 | Shadcn UI | Tailwind CSS by Jatin Praksh
           Jain.
         </p>
-        <span className="underline hover:scale-105 cursor-pointer transition-all duration-300">
-          Leave a feedback?
-        </span>
+        {/* <span className="underline hover:scale-105 cursor-pointer transition-all duration-300">
+          Leave a feedback!
+        </span> */}
       </footer>
     </div>
   );
