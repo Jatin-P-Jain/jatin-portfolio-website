@@ -128,6 +128,8 @@ POLICY:
     const data = JSON.parse(response.text ?? "{}");
     return NextResponse.json(data);
   } catch (err: unknown) {
+    console.log("Error in /api/chat:", err);
+
     return NextResponse.json(
       { error: (err as Error)?.message ?? "Unknown error" },
       { status: 500 }
