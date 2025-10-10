@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ChatbotAvatar from "@/assets/images/chatbot-avatar.png";
 import {
+  CalendarIcon,
   ChevronDownIcon,
   ChevronsLeftIcon,
   ChevronUpIcon,
@@ -25,6 +26,7 @@ import LinkedIn from "@/icons/linkedin.svg";
 import { ExternalLink } from "lucide-react"; // for Explore link icon
 import { Button } from "@/components/ui/button";
 import { sampleSize } from "@/lib/utils";
+import MeetingForm from "./meeting-form";
 // If not used elsewhere, you can remove this import
 // import { useBreakpoint } from "@/hooks/useBreakPoints";
 
@@ -61,6 +63,12 @@ type ChatMessage = {
   content: string;
   links?: LinkItem[];
   contact?: Contact;
+  meeting?: {
+    scheduled: boolean;
+    htmlLink?: string;
+    meetLink?: string;
+    eventId?: string;
+  };
 };
 
 // NEW: types and registry
@@ -338,6 +346,51 @@ function ContactBlock({ contact }: { contact?: Contact }) {
   );
 }
 
+// In ChatWidget.tsx, add this component
+function MeetingBlock({ meeting }: { meeting?: ChatMessage["meeting"] }) {
+  if (!meeting || !meeting.scheduled) return null;
+
+  return (
+    <div className="flex flex-col mt-3 rounded-xl border-2 border-green-200 bg-green-50 dark:bg-green-900/20 dark:border-green-800 p-4 space-y-3">
+      <div className="flex items-center gap-2 text-green-800 dark:text-green-200">
+        <span className="text-lg">🤝</span>
+        <span className="font-semibold">Meeting Scheduled Successfully!</span>
+      </div>
+
+      <p className="text-sm text-green-700 dark:text-green-300">
+        Check your email and calendar for the invite. The meeting details have
+        been sent to you.
+      </p>
+
+      {meeting.htmlLink && (
+        <a
+          href={meeting.htmlLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-row w-fit items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors"
+        >
+          <CalendarIcon className="h-4 w-4" />
+          View Meeting
+          <span aria-hidden>↗</span>
+        </a>
+      )}
+
+      {meeting.meetLink && (
+        <a
+          href={meeting.meetLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-row w-fit items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors ml-2"
+        >
+          <span>🎥</span>
+          Join Google Meet
+          <span aria-hidden>↗</span>
+        </a>
+      )}
+    </div>
+  );
+}
+
 export default function ChatBotWidget({}: { isMobile: boolean }) {
   const { isMobile } = useBreakpoint();
   const [open, setOpen] = useState(false);
@@ -347,6 +400,8 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showMeetingForm, setShowMeetingForm] = useState(false);
+
   const listRef = useRef<HTMLDivElement>(null);
   const prevOpenRef = useRef(false);
   useEffect(() => {
@@ -360,6 +415,19 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
   useEffect(() => {
     if (open) setQuickPrompts(sampleSize(SUGGESTED_PROMPTS, 4));
   }, [open]);
+
+  useEffect(() => {
+    const lastAssistant = [...messages]
+      .reverse()
+      .find((m) => m.role === "assistant");
+    if (lastAssistant) {
+      setShowMeetingForm(
+        lastAssistant.content.includes("[collect-meeting-info]")
+      );
+    } else {
+      setShowMeetingForm(false);
+    }
+  }, [messages]);
 
   // useEffect(() => {
   //   if (open && listRef.current) {
@@ -393,10 +461,11 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
         ? data.links
         : undefined;
       const contact: Contact = data.contact ?? null;
+      const meeting: ChatMessage["meeting"] = data.meeting ?? null;
 
       setMessages([
         ...nextMsgs,
-        { role: "assistant", content: answer, links, contact },
+        { role: "assistant", content: answer, links, contact, meeting },
       ]);
       setQuickPrompts(sampleSize(SUGGESTED_PROMPTS, 4));
     } catch {
@@ -563,7 +632,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                       : "bg-gray-200/60 text-gray-700"
                   }`}
                 >
-                  {leadText}
+                  {leadText.replace(/\[collect-meeting-info\]/g, "").trim()}
                 </div>
 
                 {/* Assistant extras */}
@@ -579,11 +648,24 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                     )}
 
                     <ContactBlock contact={m.contact} />
+                    <MeetingBlock meeting={m.meeting} />
                   </>
                 )}
               </div>
             );
           })}
+          {showMeetingForm && (
+            <MeetingForm
+              onSubmit={async (data) => {
+                // Handle the form submission
+                await sendMessage(
+                  undefined,
+                  `Schedule meeting with details: email=${data.email}, name=${data.name}, topic=${data.topic}, date=${data.date}, time=${data.time}`
+                );
+              }}
+              isSubmitting={loading}
+            />
+          )}
           {loading && <div className="loader ml-2"></div>}
           {/* Quick suggestions */}
           <div className="flex flex-col gap-4 px-4">
