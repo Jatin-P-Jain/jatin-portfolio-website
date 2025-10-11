@@ -1,0 +1,19 @@
+// Suggested prompts (top-level inside component)
+export const SUGGESTED_PROMPTS = [
+  "Show live projects",
+  "What’s your tech stack?",
+  "Are you available for new projects?",
+  "Share contact details",
+  "Show live projects with links.",
+  "List core skills with ratings.",
+  "What’s your experience level?",
+  "What technologies do you specialize in?",
+  "What kind of projects have you worked on?",
+  "How can I contact you for work?",
+  "What are your preferred working hours?",
+  "What is your expected salary range?",
+  "Do you have a resume I can view?",
+  "Tell me about your recent work experience.",
+  "What are your strongest technical skills?",
+  "Can you provide links to your portfolio or GitHub?",
+];

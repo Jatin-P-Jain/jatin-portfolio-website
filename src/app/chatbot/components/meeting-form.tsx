@@ -208,9 +208,16 @@ export default function MeetingForm({
             />
           </div>
 
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Scheduling..." : "Schedule Meeting"}
-          </Button>
+          {isSubmitting ? (
+            <div className="flex flex-col text-xs w-full items-center justify-center gap-2 text-gray-500">
+              <div className="loader flex w-fit" />
+              Scheduling your meeting
+            </div>
+          ) : (
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              "Schedule Meeting"
+            </Button>
+          )}
         </form>
       </Form>
     </div>

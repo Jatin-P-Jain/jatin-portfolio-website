@@ -1,407 +1,38 @@
-// app/components/ChatWidget.tsx
 "use client";
-
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ChatbotAvatar from "@/assets/images/chatbot-avatar.png";
-import {
-  CalendarIcon,
-  ChevronDownIcon,
-  ChevronsLeftIcon,
-  ChevronUpIcon,
-  DownloadIcon,
-  RefreshCwIcon,
-  Send,
-  X,
-} from "lucide-react";
+import { ChevronsLeftIcon, RefreshCwIcon, Send, X } from "lucide-react";
 import clsx from "clsx";
 import TextType from "@/components/TextType";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
-import Image from "next/image";
-import Whatsapp from "@/icons/icon-whatsapp.svg";
-import LinkedIn from "@/icons/linkedin.svg";
-
-// NEW: add near the top imports
-import { ExternalLink } from "lucide-react"; // for Explore link icon
 import { Button } from "@/components/ui/button";
 import { sampleSize } from "@/lib/utils";
-import MeetingForm from "./meeting-form";
-// If not used elsewhere, you can remove this import
-// import { useBreakpoint } from "@/hooks/useBreakPoints";
-
-// Suggested prompts (top-level inside component)
-const SUGGESTED_PROMPTS = [
-  "Show live projects",
-  "What’s your tech stack?",
-  "Are you available for new projects?",
-  "Share contact details",
-  "Show live projects with links.",
-  "List core skills with ratings.",
-  "What’s your experience level?",
-  "What technologies do you specialize in?",
-  "What kind of projects have you worked on?",
-  "How can I contact you for work?",
-  "What are your preferred working hours?",
-  "What is your expected salary range?",
-  "Do you have a resume I can view?",
-  "Tell me about your recent work experience.",
-  "What are your strongest technical skills?",
-  "Can you provide links to your portfolio or GitHub?",
-];
-
-type LinkItem = { title: string; url: string };
-type Contact = {
-  email: string;
-  phone: string;
-  linkedin?: string;
-  github?: string;
-} | null;
-
-type ChatMessage = {
-  role: "user" | "assistant";
-  content: string;
-  links?: LinkItem[];
-  contact?: Contact;
-  meeting?: {
-    scheduled: boolean;
-    htmlLink?: string;
-    meetLink?: string;
-    eventId?: string;
-  };
-};
-
-// NEW: types and registry
-type Project = {
-  key: "megha" | "hotHomes";
-  title: string;
-  about: string;
-  summary: string; // 1–2 line key features summary
-  tech: { label: string; icon?: string }[];
-  link: string;
-};
-
-const PROJECTS: Record<Project["key"], Project> = {
-  megha: {
-    key: "megha",
-    title: "Megha Sales Corporation",
-    about:
-      "Enterprise PWA for an autoparts wholesaler managing 9–10 brands; digitizes cataloging and ordering with real-time flows.",
-    summary:
-      "Installable PWA • Role-based Admin/User • Google One Tap • WhatsApp order updates • Instant search/filter • Persistent login",
-    tech: [
-      { label: "Next.js 15", icon: "⨁" },
-      { label: "React", icon: "⚛︎" },
-      { label: "shadcn/ui", icon: "🧩" },
-      { label: "Tailwind CSS", icon: "🎨" },
-      { label: "Firebase", icon: "🔥" },
-      { label: "One Tap", icon: "🎯" },
-      { label: "WhatsApp API", icon: "💬" },
-      { label: "Vercel", icon: "▲" },
-    ],
-    link: "https://meghasalescorporation.in",
-  },
-  hotHomes: {
-    key: "hotHomes",
-    title: "Hot Homes",
-    about:
-      "Learning project exploring Next.js + Firebase; catalogs homes with price, address, amenities, and role-based admin.",
-    summary:
-      "Favourites • Google Sign-In • Maps for property locations • Admin listings",
-    tech: [
-      { label: "Next.js", icon: "⨁" },
-      { label: "React", icon: "⚛︎" },
-      { label: "shadcn/ui", icon: "🧩" },
-      { label: "Tailwind CSS", icon: "🎨" },
-      { label: "Firebase", icon: "🔥" },
-      { label: "Google Maps", icon: "🗺️" },
-    ],
-    link: "https://hot-homes.jatinprakash.online",
-  },
-};
-
-const GITHUB_URL = "https://github.com/Jatin-P-Jain?tab=repositories";
-const RESUME_URL =
-  "https://drive.google.com/file/d/15d_m4uBGsdNrOfXA0oRDXsTVbHrKjyux/view?usp=sharing";
-
-// 1) Detect if the assistant is discussing resume/CV;
-function mentionsResume(msg: ChatMessage): boolean {
-  const t = (msg.content || "").toLowerCase();
-  if (/(resume|curriculum vitae|cv)\b/.test(t)) return true;
-  const links = msg.links || [];
-  return links.some((l) => /resume|cv|\.pdf/i.test(`${l.title} ${l.url}`));
-}
-
-// 2) CTA button
-function ResumeCTA() {
-  return (
-    <a
-      href={RESUME_URL}
-      download
-      className="mt-3 inline-flex items-center justify-center gap-2 rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 focus-visible:outline-2 focus-visible:outline-sky-400"
-      aria-label="Download Resume"
-      target="_blank"
-    >
-      Download Resume
-      <DownloadIcon className="w-4 h-4 ml-1" />
-    </a>
-  );
-}
-
-// 2) Simple project extraction (by URL match from content or links)
-function extractProjectsFromMessage(msg: ChatMessage): Project[] {
-  const set = new Map<string, Project>();
-  const content = (msg.content || "").toLowerCase();
-  const links = (msg.links || []).map((l) => l.url.toLowerCase());
-
-  if (
-    content.includes("meghasalescorporation.in") ||
-    links.some((u) => u.includes("meghasalescorporation.in"))
-  ) {
-    set.set("megha", PROJECTS.megha);
-  }
-  if (
-    content.includes("hot-homes.jatinprakash.online") ||
-    links.some((u) => u.includes("hot-homes.jatinprakash.online"))
-  ) {
-    set.set("hotHomes", PROJECTS.hotHomes);
-  }
-  return [...set.values()];
-}
-
-// 3) Lead sentence extractor: first sentence/line only
-function getLeadSentence(text: string): string {
-  if (!text) return "";
-  // Stop at first period or newline; trim to keep it tight
-  const stop = text.search(/[.\n]/);
-  return stop > -1
-    ? text.slice(0, stop + (text[stop] === "." ? 1 : 0)).trim()
-    : text.trim();
-}
-
-// 4) Card UI (plain Tailwind; replace with shadcn Card if preferred)
-function ProjectCard({ p }: { p: Project }) {
-  return (
-    <div className="rounded-lg border-1 border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out">
-      <div className="p-4 space-y-2">
-        <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-          {p.title}
-        </div>
-        <p className="text-xs text-gray-700 dark:text-gray-300">{p.about}</p>
-        <p className="text-xs text-gray-700 dark:text-gray-300">{p.summary}</p>
-
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {p.tech.map((t, i) => (
-            <span
-              key={i}
-              className="inline-flex items-center gap-1 rounded-lg border border-gray-300 px-2 py-0.5 text-[12px] text-gray-800 dark:text-gray-300"
-            >
-              <span aria-hidden>{t.icon ?? "•"}</span>
-              <span>{t.label}</span>
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="px-4 pb-3">
-        <a
-          href={p.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex justify-center items-center gap-1 text-xs font-semibold text-sky-700 hover:underline border-1 w-full px-4 py-1 rounded-md focus-visible:outline-2 focus-visible:outline-sky-400 border-sky-700"
-          aria-label={`Explore ${p.title}`}
-        >
-          Explore Now <ExternalLink className="h-3 w-3" />
-        </a>
-      </div>
-    </div>
-  );
-}
-
-// 5) Projects block with GitHub CTA
-function ProjectsBlock({ msg }: { msg: ChatMessage }) {
-  const projects = extractProjectsFromMessage(msg);
-  if (projects.length === 0) return null;
-
-  return (
-    <div className="mt-3 space-y-3">
-      <div className="grid grid-cols-1 gap-3">
-        {projects.map((p) => (
-          <ProjectCard key={p.key} p={p} />
-        ))}
-      </div>
-
-      {/* Single, consistent GitHub CTA under the cards */}
-      <div className="text-xs text-gray-700">
-        See more work on{" "}
-        <a
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sky-700 dark:text-sky-400 hover:underline font-semibold"
-        >
-          GitHub
-        </a>
-        .
-      </div>
-    </div>
-  );
-}
-
-function LinksBlock({ links }: { links?: LinkItem[] }) {
-  if (!links || links.length === 0) return null;
-  return (
-    <ul className="mt-2 list-disc pl-5 text-sm">
-      {links.map((l, i) => {
-        const isInternal = l.url.startsWith("/");
-        return (
-          <li key={i}>
-            {isInternal ? (
-              <Link href={l.url} className="text-blue-600 hover:underline">
-                {l.title}
-              </Link>
-            ) : (
-              <a
-                href={l.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sky-700 hover:underline"
-              >
-                {l.title}
-              </a>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-function ContactBlock({ contact }: { contact?: Contact }) {
-  if (!contact) return null;
-  const emailHref = `mailto:${contact.email}`;
-  const telHref = `tel:${(contact.phone || "").replace(/\s/g, "")}`;
-  const waHref = `https://wa.me/${(contact.phone || "").replace(/\D/g, "")}`;
-  return (
-    <div className="mt-2 rounded-xl border-1 bg-gray-100 dark:bg-gray-700 p-4 shadow-md hover:shadow-lg transition-shadow space-y-2 text-xs text-gray-700 dark:text-gray-300">
-      <div className="font-semibold flex w-full justify-center items-center text-gray-900 dark:text-gray-100 text-base tracking-tight">
-        📬 Contact
-      </div>
-
-      {contact?.email && (
-        <div className="flex items-center gap-2">
-          <span className="shrink-0">✉️ Email</span>
-          <a
-            className="text-sky-700 hover:underline font-semibold text-sm  focus-visible:outline-2 focus-visible:outline-sky-400 rounded"
-            href={emailHref}
-          >
-            {contact.email}
-          </a>
-        </div>
-      )}
-
-      {contact?.phone && (
-        <div className="flex items-center gap-2">
-          <span className="shrink-0">📞 Phone :</span>
-          <a
-            className="text-sky-700 hover:underline font-semibold text-sm  focus-visible:outline-2 focus-visible:outline-sky-400 rounded"
-            href={telHref}
-          >
-            {contact.phone}
-          </a>
-        </div>
-      )}
-
-      {contact?.linkedin && (
-        <div className="flex items-center gap-2">
-          <span className="shrink-0 flex items-center gap-1">
-            <Image src={LinkedIn} alt="LinkedIn" width={20} height={20} />{" "}
-            LinkedIn :
-          </span>
-          <a
-            className="text-sky-700 hover:underline font-semibold inline-flex items-center gap-1 text-sm focus-visible:outline-2 focus-visible:outline-sky-400 rounded"
-            href={contact.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Jatin Prakash Jain <span aria-hidden>↗</span>
-          </a>
-        </div>
-      )}
-      <a
-        className="text-green-700 hover:underline font-semibold flex items-center gap-1 text-sm  focus-visible:outline-2 focus-visible:outline-emerald-400 rounded"
-        href={waHref}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open WhatsApp chat"
-      >
-        <span className="text-xs text-muted-foreground">
-          Let&apos;s Chat on{" "}
-        </span>
-        <Image src={Whatsapp} alt="WhatsApp" width={20} height={20} />
-        <span className="inline-flex items-center gap-1">
-          WhatsApp <span aria-hidden>↗</span>
-        </span>
-      </a>
-    </div>
-  );
-}
-
-// In ChatWidget.tsx, add this component
-function MeetingBlock({ meeting }: { meeting?: ChatMessage["meeting"] }) {
-  if (!meeting || !meeting.scheduled) return null;
-
-  return (
-    <div className="flex flex-col mt-3 rounded-xl border-2 border-green-200 bg-green-50 dark:bg-green-900/20 dark:border-green-800 p-4 space-y-3">
-      <div className="flex items-center gap-2 text-green-800 dark:text-green-200">
-        <span className="text-lg">🤝</span>
-        <span className="font-semibold">Meeting Scheduled Successfully!</span>
-      </div>
-
-      <p className="text-sm text-green-700 dark:text-green-300">
-        Check your email and calendar for the invite. The meeting details have
-        been sent to you.
-      </p>
-
-      {meeting.htmlLink && (
-        <a
-          href={meeting.htmlLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-row w-fit items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors"
-        >
-          <CalendarIcon className="h-4 w-4" />
-          View Meeting
-          <span aria-hidden>↗</span>
-        </a>
-      )}
-
-      {meeting.meetLink && (
-        <a
-          href={meeting.meetLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-row w-fit items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors ml-2"
-        >
-          <span>🎥</span>
-          Join Google Meet
-          <span aria-hidden>↗</span>
-        </a>
-      )}
-    </div>
-  );
-}
+import MeetingForm from "./components/meeting-form";
+import { SUGGESTED_PROMPTS } from "@/data/suggested-prompts";
+import { ChatMessage, Contact, LinkItem } from "../types/types";
+import {
+  extractProjectsFromMessage,
+  getLeadSentence,
+  mentionsResume,
+} from "@/lib/chatbot-utils";
+import { ResumeCTA } from "./components/resume-cta";
+import { ProjectsBlock } from "./components/projects-block";
+import { LinksBlock } from "./components/links-block";
+import { ContactBlock } from "./components/contacts-block";
+import { MeetingBlock } from "./components/meetings-block";
+import QuickSuggestions from "./components/quick-suggestions";
 
 export default function ChatBotWidget({}: { isMobile: boolean }) {
   const { isMobile } = useBreakpoint();
   const [open, setOpen] = useState(false);
   const [explored, setExplored] = useState(false);
-  const [showQuickPrompts, setShowQuickPrompts] = useState(true);
   const [quickPrompts, setQuickPrompts] = useState<string[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showMeetingForm, setShowMeetingForm] = useState(false);
-
+  const [meetingScheduling, setMeetingScheduling] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const prevOpenRef = useRef(false);
   useEffect(() => {
@@ -429,13 +60,11 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
     }
   }, [messages]);
 
-  // useEffect(() => {
-  //   if (open && listRef.current) {
-  //     listRef.current.scrollTop = listRef.current.scrollHeight;
-  //   }
-  // }, [messages, open]);
-
-  async function sendMessage(e?: React.FormEvent, message?: string) {
+  async function sendMessage(
+    e?: React.FormEvent,
+    message?: string,
+    from?: string
+  ) {
     e?.preventDefault();
     const inputToUse = message ?? input;
     if (!inputToUse.trim() || loading) return;
@@ -444,9 +73,9 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
       ...messages,
       { role: "user", content: inputToUse.trim() },
     ];
+    from === "meeting-form" ? setMeetingScheduling(true) : setLoading(true);
     setMessages(nextMsgs);
     setInput("");
-    setLoading(true);
 
     try {
       const res = await fetch("/api/chat", {
@@ -475,11 +104,11 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
       ]);
     } finally {
       setLoading(false);
+      setMeetingScheduling(false);
     }
   }
   return (
     <>
-      {/* Button container: mobile bottom-0 left-0; desktop keeps prior offsets */}
       <div className="fixed bottom-8 left-8 md:bottom-4 md:left-8 lg:left-16 lg:bottom-8 z-[10] flex md:flex-row items-center gap-1 md:gap-2 ">
         <button
           type="button"
@@ -490,7 +119,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
             setOpen((prev) => !prev);
             setExplored(true);
           }}
-          className="hover:bg-none cursor-pointer flex flex-col items-center gap-2"
+          className="hover:!bg-none cursor-pointer flex flex-col items-center gap-2 w-fit"
         >
           {open ? (
             <div className="flex items-center gap-1 py-2 bg-gray-default dark:bg-gray-700 rounded-full text-orange-700 border-orange-600 border-1 text-xs px-2">
@@ -554,14 +183,14 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
       <div
         id="chat-panel"
         className={clsx(
-          !open && "!h-0 border-0 !p-0 opacity-0 pointer-events-none",
+          !open && "!h-0 !w-0 border-0 !p-0 opacity-0 pointer-events-none",
           // Mobile: to the right of the 64px button + 8px gap => 72px
           // Desktop: original placement
           "fixed bottom-20 left-8 md:bottom-14 md:left-8 lg:left-16 lg:bottom-18",
           // Sizing
-          "w-[80%] md:max-w-120 min-h-130 md:min-h-150 max-h-160",
+          "w-[85%] h-[75%] md:max-w-130 max-h-160",
           // Styling
-          "border-2 bg-gray-100 dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col overflow-hidden z-[99999] transition-all duration-300 ease-in-out"
+          "border-2 bg-gray-100 dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col overflow-hidden z-[99999] transition-all duration-500 ease-in-out"
         )}
       >
         <div className="px-4 py-1 border-b border-neutral-200 dark:border-neutral-800 font-medium flex justify-between items-center">
@@ -601,7 +230,6 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
             pauseDuration={1500}
             showCursor={true}
             cursorCharacter="_"
-            // textColors={["!text-sky-700/80,text-sky-300"]}
             className="!text-sky-700/80 dark:!text-sky-400/80 font-medium text-xs"
           />
 
@@ -660,48 +288,19 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                 // Handle the form submission
                 await sendMessage(
                   undefined,
-                  `Schedule meeting with details: email=${data.email}, name=${data.name}, topic=${data.topic}, date=${data.date}, time=${data.time}`
+                  `Schedule meeting with ${data.name} (${data.email}) for "${data.topic}" on ${data.date} at ${data.time}.`,
+                  "meeting-form"
                 );
               }}
-              isSubmitting={loading}
+              isSubmitting={meetingScheduling}
             />
           )}
           {loading && <div className="loader ml-2"></div>}
           {/* Quick suggestions */}
-          <div className="flex flex-col gap-4 px-4">
-            <div className="flex flex-row items-center justify-center w-full gap-4">
-              {/* <div className="flex h-0.5 w-full bg-gray-200 " /> */}
-              <div className="text-[10px] text-gray-400 flex justify-center items-center whitespace-nowrap">
-                Quick Suggestions
-              </div>
-              <div className="flex h-0.5 w-full bg-gray-200" />
-              <div
-                className="flex"
-                onClick={() => setShowQuickPrompts((v) => !v)}
-              >
-                {!showQuickPrompts ? (
-                  <ChevronDownIcon className="h-4 w-4 text-gray-400" />
-                ) : (
-                  <ChevronUpIcon className="h-4 w-4 text-gray-400" />
-                )}
-              </div>
-            </div>
-            {showQuickPrompts && (
-              <div className="flex flex-wrap gap-2 justify-end">
-                {quickPrompts.map((p) => (
-                  <Button
-                    variant={"outline"}
-                    key={p}
-                    onClick={() => sendMessage(undefined, p)}
-                    className="rounded-full border-1 px-2 md:px-3 text-[10px] md:text-xs transition border-sky-700 text-sky-700 dark:text-sky-400 hover:bg-sky-700 hover:text-white focus-visible:outline-2 focus-visible:outline-sky-400"
-                    aria-label={`Ask: ${p}`}
-                  >
-                    {p}
-                  </Button>
-                ))}
-              </div>
-            )}
-          </div>
+          <QuickSuggestions
+            sendMessageHandler={sendMessage}
+            quickPrompts={quickPrompts}
+          />
         </div>
 
         <form
