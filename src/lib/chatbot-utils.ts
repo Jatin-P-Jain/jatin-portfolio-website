@@ -39,3 +39,9 @@ export function getLeadSentence(text: string): string {
     ? text.slice(0, stop + (text[stop] === "." ? 1 : 0)).trim()
     : text.trim();
 }
+
+export const formatDuration = (minutes: number): string => {
+  if (minutes === 60) return "1 hour";
+  if (minutes < 60) return `${minutes} mins`;
+  return `${minutes} mins`;
+};

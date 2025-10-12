@@ -11,6 +11,7 @@ const authUrl = oAuth2Client.generateAuthUrl({
   scope: [
     "https://www.googleapis.com/auth/calendar",
     "https://www.googleapis.com/auth/calendar.events",
+    "https://www.googleapis.com/auth/gmail.send",
   ],
 });
 console.log("Authorize this app by visiting:", authUrl);

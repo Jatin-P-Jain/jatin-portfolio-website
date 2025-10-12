@@ -105,8 +105,6 @@ POLICY:
       const functionCall = response.functionCalls[0];
 
       if (functionCall.name === "schedule_meeting") {
-        console.log("Scheduling meeting with args:", functionCall.args);
-
         try {
           // Extract attendee details with a safe type cast and normalization
           type ScheduleArgs = {
@@ -115,6 +113,7 @@ POLICY:
             date?: string;
             time?: string;
             topic?: string;
+            duration?: number;
           };
           const args = functionCall?.args as unknown as ScheduleArgs;
           const attendees = Array.isArray(args.attendees)
@@ -126,6 +125,7 @@ POLICY:
           const date = args.date ?? "";
           const time = args.time ?? "";
           const topic = args.topic ?? "Meeting";
+          const duration = args.duration;
 
           // Call your calendar API
           const scheduleResponse = await fetch(
@@ -138,17 +138,17 @@ POLICY:
                 date,
                 time,
                 topic: `${topic} - Meeting with ${attendee_name}`,
+                duration,
               }),
             }
           );
-          console.log("Schedule API response", scheduleResponse);
 
           const scheduleResult = await scheduleResponse.json();
 
           if (scheduleResult.ok) {
             const successPrompt = `Successfully scheduled a meeting titled "${topic}" for ${date} at ${time} with attendee(s) ${attendees.join(
               ", "
-            )}. 
+            )}. Duration: ${duration} minutes.
 Write a friendly confirmation message that varies each time, including a polite reminder for the attendee(s) to check their email and calendar invite. 
 Mention the main attendee emails explicitly.`;
             const success = await ai.models.generateContent({

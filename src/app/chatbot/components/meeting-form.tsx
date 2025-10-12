@@ -9,6 +9,7 @@ import {
   MailIcon,
   UserIcon,
   FileTextIcon,
+  MoveHorizontalIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { formatDuration } from "@/lib/chatbot-utils";
 
 const formSchema = z.object({
   email: z
@@ -54,6 +57,7 @@ const formSchema = z.object({
     .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
       message: "Please enter a valid time format.",
     }),
+  duration: z.number().min(15).max(60),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -75,8 +79,11 @@ export default function MeetingForm({
       topic: "",
       date: "",
       time: "",
+      duration: 30,
     },
   });
+
+  const currentDuration = form.watch("duration");
 
   const handleSubmit = async (data: FormData) => {
     try {
@@ -94,6 +101,10 @@ export default function MeetingForm({
         <CalendarIcon className="h-4 w-4" />
         Schedule Meeting
       </div>
+      <span className="text-xs text-gray-500">
+        {" "}
+        Please provide all the details below to schedule your meeting.
+      </span>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -207,6 +218,43 @@ export default function MeetingForm({
               )}
             />
           </div>
+          <FormField
+            control={form.control}
+            name="duration"
+            render={({ field }) => (
+              <FormItem className="">
+                <div className="flex justify-between items-center">
+                  <FormLabel className="flex items-center gap-2">
+                    <MoveHorizontalIcon className="h-3 w-3" />
+                    Duration
+                  </FormLabel>
+                  <div className="text-sm font-medium text-sky-700">
+                    {formatDuration(currentDuration)}
+                  </div>
+                </div>
+                <FormControl>
+                  <Slider
+                    value={[field.value]}
+                    onValueChange={(values) => {
+                      field.onChange(values[0]);
+                    }}
+                    min={15}
+                    max={60}
+                    step={15}
+                    disabled={isSubmitting}
+                    className="w-full"
+                  />
+                </FormControl>
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>15 mins</span>
+                  <span>30 mins</span>
+                  <span>45 mins</span>
+                  <span>1 hour</span>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {isSubmitting ? (
             <div className="flex flex-col text-xs w-full items-center justify-center gap-2 text-gray-500">
@@ -214,8 +262,12 @@ export default function MeetingForm({
               Scheduling your meeting
             </div>
           ) : (
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              "Schedule Meeting"
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isSubmitting || !form.formState.isValid}
+            >
+              Schedule Meeting
             </Button>
           )}
         </form>

@@ -13,6 +13,7 @@ import { SUGGESTED_PROMPTS } from "@/data/suggested-prompts";
 import { ChatMessage, Contact, LinkItem } from "../types/types";
 import {
   extractProjectsFromMessage,
+  formatDuration,
   getLeadSentence,
   mentionsResume,
 } from "@/lib/chatbot-utils";
@@ -288,7 +289,11 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                 // Handle the form submission
                 await sendMessage(
                   undefined,
-                  `Schedule meeting with ${data.name} (${data.email}) for "${data.topic}" on ${data.date} at ${data.time}.`,
+                  `Schedule meeting with ${data.name} (${data.email}) for "${
+                    data.topic
+                  }" on ${data.date} at ${data.time} for ${formatDuration(
+                    data.duration
+                  )}.`,
                   "meeting-form"
                 );
               }}

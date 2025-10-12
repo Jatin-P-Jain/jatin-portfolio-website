@@ -31,7 +31,18 @@ export const scheduleMeetingFunction = {
         type: Type.STRING,
         description: "Meeting topic or agenda",
       },
+      duration: {
+        type: Type.NUMBER,
+        description: "Meeting duration in minutes (15 to 60 minutes)",
+      },
     },
-    required: ["attendees", "attendee_name", "date", "time", "topic"],
+    required: [
+      "attendees",
+      "attendee_name",
+      "date",
+      "time",
+      "topic",
+      "duration",
+    ],
   },
 };
