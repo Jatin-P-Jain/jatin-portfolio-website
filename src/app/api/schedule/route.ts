@@ -4,6 +4,14 @@ import * as chrono from "chrono-node";
 
 export async function POST(req: NextRequest) {
   const { attendees, date, time, topic, duration } = await req.json();
+  console.log("Received scheduling request:", {
+    attendees,
+    date,
+    time,
+    topic,
+    duration,
+  });
+
   if (!attendees || !date || !time || !topic) {
     return NextResponse.json(
       { ok: false, error: "Missing fields" },

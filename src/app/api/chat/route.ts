@@ -126,6 +126,14 @@ POLICY:
           const time = args.time ?? "";
           const topic = args.topic ?? "Meeting";
           const duration = args.duration;
+          console.log("Scheduling meeting with args:", {
+            attendees,
+            attendee_name,
+            date,
+            time,
+            topic,
+            duration,
+          });
 
           // Call your calendar API
           const scheduleResponse = await fetch(
@@ -142,8 +150,10 @@ POLICY:
               }),
             }
           );
+          console.log("Schedule response status:", scheduleResponse);
 
           const scheduleResult = await scheduleResponse.json();
+          console.log("Schedule result:", scheduleResult);
 
           if (scheduleResult.ok) {
             const successPrompt = `Successfully scheduled a meeting titled "${topic}" for ${date} at ${time} with attendee(s) ${attendees.join(
