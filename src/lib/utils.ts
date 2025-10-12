@@ -1,4 +1,3 @@
-import { ChatMessage } from "@/app/types/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 

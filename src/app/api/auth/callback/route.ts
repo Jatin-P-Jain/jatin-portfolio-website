@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
       httpOnly: true,
     });
     return response;
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("OAuth callback error:", err);
     return NextResponse.json(
       { error: "Failed to exchange code for tokens" },

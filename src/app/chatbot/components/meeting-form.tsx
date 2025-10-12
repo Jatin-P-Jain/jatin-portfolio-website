@@ -126,7 +126,7 @@ export default function MeetingForm({
                   />
                 </FormControl>
                 <FormDescription className="text-xs">
-                  We'll send the calendar invite to this email.
+                  We&apos;ll send the calendar invite to this email.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -171,7 +171,7 @@ export default function MeetingForm({
                   />
                 </FormControl>
                 <FormDescription className="text-xs">
-                  Brief description of what you'd like to discuss.
+                  Brief description of what you&apos;d like to discuss.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
