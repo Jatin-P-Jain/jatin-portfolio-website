@@ -16,7 +16,6 @@ import {
   getIntelligentPrompts,
   getLeadSentence,
   mentionsResume,
-  sampleSize,
 } from "@/lib/chatbot-utils";
 import { ResumeCTA } from "./components/resume-cta";
 import { ProjectsBlock } from "./components/projects-block";
