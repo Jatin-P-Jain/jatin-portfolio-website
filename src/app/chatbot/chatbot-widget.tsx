@@ -239,7 +239,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
 
         <div
           ref={listRef}
-          className="flex-1 overflow-y-auto overflow-anchor-none px-4 py-3 space-y-3"
+          className="flex-1 overflow-y-auto overflow-anchor-none px-4 py-3 space-y-3 transition-all duration-300 ease-in-out"
         >
           <TextType
             text={[
