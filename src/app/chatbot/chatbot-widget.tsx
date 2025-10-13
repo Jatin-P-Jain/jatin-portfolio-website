@@ -167,12 +167,14 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                     ? [
                         "Meet my assistant!",
                         "See what it can do.",
+                        "Schedule meetings.",
                         "Explore projects with help.",
                         "Get quick answers.",
                         "Here to assist you.",
                       ]
                     : [
                         "Meet my assistant! See what it can do.",
+                        "I can schedule meetings.",
                         "Explore projects with help.",
                         "Get quick answers.",
                         "Here to assist you.",
@@ -180,6 +182,7 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
                   : [
                       "Anything more?",
                       "Still here to help.",
+                      "Want to arrange a meeting?",
                       "Ask me!",
                       "Continue Chatting.",
                     ]

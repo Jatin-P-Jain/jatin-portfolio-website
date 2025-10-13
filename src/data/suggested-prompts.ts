@@ -19,7 +19,7 @@ export const SUGGESTED_PROMPTS = [
   "Schedule a meeting with me",
   "What is your availability for new projects?",
   "Let's schedule a meeting",
-  "Set up a call with me",
+  "Set up a call with him",
   "Book a time to discuss",
   "Arrange a meeting",
   "Schedule a discussion",
