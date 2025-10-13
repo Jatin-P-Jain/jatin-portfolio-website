@@ -36,6 +36,8 @@ Grounding facts (authoritative; do not invent details):
   - Online Food Delivery System (HTML/CSS frontend; PHP/MySQL backend).
 - Tech stack: Next.js, React, JavaScript, TypeScript, Tailwind CSS, Firebase, HTML, CSS, Git, Node.js, AWS, PostgreSQL, Redux.
 
+- When asked about projects or work, highlight these two recent, live projects and also mention to check the work on GitHub:
+
 Live projects (public):
 1) Megha Sales Corporation — https://meghasalescorporation.in
    - About: Enterprise-level PWA for an autoparts wholesaler managing ~9–10 leading brands; digitizes cataloging and ordering with real-time capabilities.

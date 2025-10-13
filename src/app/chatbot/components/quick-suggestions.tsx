@@ -15,18 +15,21 @@ export default function QuickSuggestions({
     <>
       {/* Quick suggestions */}
       <div className="flex flex-col gap-4 px-4">
-        <div className="flex flex-row items-center justify-center w-full gap-4">
+        <div
+          className="flex flex-row items-center justify-center w-full gap-4 z-[9999]"
+          onClick={() => setShowQuickPrompts((v) => !v)}
+        >
           {/* <div className="flex h-0.5 w-full bg-gray-200 " /> */}
           <div className="text-[10px] text-gray-400 flex justify-center items-center whitespace-nowrap">
             Quick Suggestions
           </div>
           <div className="flex h-0.5 w-full bg-gray-200" />
-          <div className="flex" onClick={() => setShowQuickPrompts((v) => !v)}>
+          <div className="flex">
             <ChevronDownIcon
               className={clsx(
                 "h-4 w-4 text-gray-400 transition-all duration-300 ease-in-out",
                 {
-                  "rotate-180": !showQuickPrompts,
+                  "rotate-180": showQuickPrompts,
                 }
               )}
             />
