@@ -10,7 +10,7 @@ export function ProjectCard({ p }: { p: Project }) {
           {p.name}
         </div>
         <p className="text-xs text-gray-700 dark:text-gray-300">{p.description}</p>
-        <p className="text-xs text-gray-700 dark:text-gray-300">{p.highlights.join(", ")}</p>
+        <p className="text-xs text-gray-700 dark:text-gray-300">{p.highlights.join(" · ")}</p>
 
         <div className="flex flex-wrap gap-1.5 pt-1">
           {p.techStack?.map((t, i) => (

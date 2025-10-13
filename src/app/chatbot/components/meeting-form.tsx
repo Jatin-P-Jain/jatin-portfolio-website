@@ -96,8 +96,8 @@ export default function MeetingForm({
   };
 
   return (
-    <div className="flex flex-col mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-800 space-y-4">
-      <div className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col mt-4 p-4 border rounded-lg space-y-4">
+      <div className="flex items-center gap-2 text-sm font-semibold">
         <CalendarIcon className="h-4 w-4" />
         Schedule Meeting
       </div>
