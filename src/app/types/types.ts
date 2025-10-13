@@ -19,14 +19,19 @@ type ChatMessage = {
   };
 };
 
-// NEW: types and registry
+type Tech = {
+  logo_url: string;
+  label: string;
+};
+
 type Project = {
-  key: "megha" | "hotHomes";
-  title: string;
-  about: string;
-  summary: string; // 1–2 line key features summary
-  tech: { label: string; icon?: string }[];
+  name: string;
+  projectLogo: string;
+  description: string;
+  highlights: string[];
+  techStack?: Tech[];
+  demoVideo: string;
   link: string;
-}; 
+};
 
 export type { LinkItem, Contact, ChatMessage, Project };

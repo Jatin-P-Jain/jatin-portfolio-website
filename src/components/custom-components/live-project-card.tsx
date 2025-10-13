@@ -4,21 +4,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { DotIcon, ExternalLink } from "lucide-react";
 import clsx from "clsx";
-
-type Tech = {
-  logo_url: string;
-  label: string;
-};
-
-type Project = {
-  name: string;
-  projectLogo: string;
-  description: string;
-  highlights: string[];
-  techStack?: Tech[];
-  demoVideo: string;
-  link: string;
-};
+import { Project } from "@/app/types/types";
 
 type LiveProjectCardProps = {
   project: Project;

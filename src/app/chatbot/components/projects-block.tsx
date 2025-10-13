@@ -10,8 +10,8 @@ export function ProjectsBlock({ msg }: { msg: ChatMessage }) {
   return (
     <div className="mt-3 space-y-3">
       <div className="grid grid-cols-1 gap-3">
-        {projects.map((p) => (
-          <ProjectCard key={p.key} p={p} />
+        {projects.map((p, i) => (
+          <ProjectCard key={i} p={p} />
         ))}
       </div>
 
