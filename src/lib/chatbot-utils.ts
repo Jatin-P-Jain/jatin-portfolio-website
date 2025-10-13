@@ -45,3 +45,52 @@ export const formatDuration = (minutes: number): string => {
   if (minutes < 60) return `${minutes} mins`;
   return `${minutes} mins`;
 };
+
+export function sampleSize<T>(arr: readonly T[], n: number): T[] {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a.slice(0, Math.min(n, a.length));
+}
+
+
+// Add this utility function at the top of your file or in your utils
+export function getIntelligentPrompts(
+  allPrompts: string[], 
+  recentUserMessages: string[], 
+  count: number = 4
+): string[] {
+  // Get last 2 user messages for comparison
+  const lastTwoMessages = recentUserMessages.slice(-2).map(msg => msg.toLowerCase());
+  
+  // Create a similarity check function
+  const isSimilar = (prompt: string, message: string): boolean => {
+    const promptLower = prompt.toLowerCase();
+    const messageLower = message.toLowerCase();
+    
+    // Check for exact matches or very similar phrases
+    if (promptLower.includes(messageLower) || messageLower.includes(promptLower)) {
+      return true;
+    }
+    
+    // Check for keyword overlap (intent-based filtering)
+    const promptKeywords = promptLower.split(/\s+/).filter(word => word.length > 3);
+    const messageKeywords = messageLower.split(/\s+/).filter(word => word.length > 3);
+    
+    const overlap = promptKeywords.filter(word => messageKeywords.includes(word));
+    return overlap.length > 1; // Similar if 2+ keywords overlap
+  };
+  
+  // Filter out prompts that are similar to recent messages
+  const filteredPrompts = allPrompts.filter(prompt => {
+    return !lastTwoMessages.some(message => isSimilar(prompt, message));
+  });
+  
+  // If we don't have enough unique prompts, fall back to random selection
+  const promptsToUse = filteredPrompts.length >= count ? filteredPrompts : allPrompts;
+  
+  // Randomly select the required count
+  return sampleSize(promptsToUse, count);
+}

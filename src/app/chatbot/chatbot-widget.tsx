@@ -7,15 +7,16 @@ import clsx from "clsx";
 import TextType from "@/components/TextType";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import { Button } from "@/components/ui/button";
-import { sampleSize } from "@/lib/utils";
 import MeetingForm from "./components/meeting-form";
 import { SUGGESTED_PROMPTS } from "@/data/suggested-prompts";
 import { ChatMessage, Contact, LinkItem } from "../types/types";
 import {
   extractProjectsFromMessage,
   formatDuration,
+  getIntelligentPrompts,
   getLeadSentence,
   mentionsResume,
+  sampleSize,
 } from "@/lib/chatbot-utils";
 import { ResumeCTA } from "./components/resume-cta";
 import { ProjectsBlock } from "./components/projects-block";
@@ -44,9 +45,19 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
     prevOpenRef.current = open;
   }, [open]);
 
+  // Modify your component's useEffect for setting prompts
   useEffect(() => {
-    if (open) setQuickPrompts(sampleSize(SUGGESTED_PROMPTS, 4));
-  }, [open]);
+    if (open) {
+      // Get user messages from conversation history
+      const userMessages = messages
+        .filter((m) => m.role === "user")
+        .map((m) => m.content);
+
+      setQuickPrompts(
+        getIntelligentPrompts(SUGGESTED_PROMPTS, userMessages, 4)
+      );
+    }
+  }, [open, messages]); // Add messages dependency to update prompts after each interaction
 
   useEffect(() => {
     const lastAssistant = [...messages]
@@ -97,7 +108,13 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
         ...nextMsgs,
         { role: "assistant", content: answer, links, contact, meeting },
       ]);
-      setQuickPrompts(sampleSize(SUGGESTED_PROMPTS, 4));
+      const userMessages = [...nextMsgs, { role: "assistant", content: answer }]
+        .filter((m) => m.role === "user")
+        .map((m) => m.content);
+
+      setQuickPrompts(
+        getIntelligentPrompts(SUGGESTED_PROMPTS, userMessages, 4)
+      );
     } catch {
       setMessages([
         ...nextMsgs,
@@ -223,12 +240,17 @@ export default function ChatBotWidget({}: { isMobile: boolean }) {
         >
           <TextType
             text={[
-              "Hello! 😎 This is Jatin’s Assistant. Quick answers on skills, projects, and availability.",
-              "Try prompts below or ask anything about my work experience, skills, or projects.",
+              "Hello! 😎 This is Jatin's Assistant. I can answer questions and schedule meetings with Jatin directly.",
+              "Need to schedule a meeting with Jatin? I can set it up instantly—just ask!",
+              "I give you quick access for meeting scheduling, project info, skills, and availability.",
+              "Try the prompts below, or ask anything about his work.",
+              "Instantly schedule a meeting with Jatin through our chat.",
+              "Get quick answers about Jatin's projects, skills, and availability.",
+              "Try a prompt below or type your question, including meeting requests or work inquiries.",
             ]}
             loop={true}
-            typingSpeed={200}
-            pauseDuration={1500}
+            typingSpeed={50}
+            pauseDuration={3000}
             showCursor={true}
             cursorCharacter="_"
             className="!text-sky-700/80 dark:!text-sky-400/80 font-medium text-xs"

@@ -16,4 +16,11 @@ export const SUGGESTED_PROMPTS = [
   "Tell me about your recent work experience.",
   "What are your strongest technical skills?",
   "Can you provide links to your portfolio or GitHub?",
+  "Schedule a meeting with me",
+  "What is your availability for new projects?",
+  "Let's schedule a meeting",
+  "Set up a call with me",
+  "Book a time to discuss",
+  "Arrange a meeting",
+  "Schedule a discussion",
 ];
