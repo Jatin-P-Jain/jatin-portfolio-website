@@ -34,4 +34,11 @@ type Project = {
   link: string;
 };
 
-export type { LinkItem, Contact, ChatMessage, Project };
+type Meeting = {
+  ok: boolean;
+  htmlLink: string;
+  meetLink: string;
+  eventId: string;
+};
+
+export type { LinkItem, Contact, ChatMessage, Project, Meeting };

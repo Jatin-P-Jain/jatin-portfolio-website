@@ -143,11 +143,7 @@ export default function MeetingForm({
                   Your Name
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="John Doe"
-                    {...field}
-                    disabled={isSubmitting}
-                  />
+                  <Input placeholder="Piyush Jain" {...field} disabled={isSubmitting} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -165,7 +161,7 @@ export default function MeetingForm({
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Project discussion"
+                    placeholder={`Eg. "Project discussion"`}
                     {...field}
                     disabled={isSubmitting}
                   />

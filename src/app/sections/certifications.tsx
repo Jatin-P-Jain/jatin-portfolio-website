@@ -17,6 +17,12 @@ import {
 } from "@/components/ui/carousel";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import clsx from "clsx";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 type Certification = {
   imageSrc: StaticImageData | string;
@@ -110,26 +116,43 @@ export default function CertificationsList() {
         <CarouselContent className="py-2 px-1 md:py-4 md:px-2 w-70">
           {certifications.map((cert) => (
             <CarouselItem key={cert.caption} className="">
-              <div className="transition-transform duration-300 hover:scale-105 bg-gray-default rounded-3xl p-4 border border-gray-200 shadow-md h-full flex flex-col justify-center gap-4">
+              <Dialog>
+                <DialogTrigger className="w-full h-full flex">
+                  <div className="transition-transform duration-300 hover:scale-105 bg-gray-default rounded-md p-4 border border-gray-200 shadow-md h-full flex flex-col justify-center gap-4">
+                    <div className="relative w-full flex justify-center items-center flex-col h-full">
+                      <Image
+                        src={cert.imageSrc}
+                        alt={cert.caption}
+                        width={cert.width}
+                        height={cert.height}
+                        className={clsx(
+                          "object-contain rounded-lg shadow-md hover:scale-110 transition-transform duration-300 flex mt-auto",
+                          isMobile ? "w-full" : "w-72"
+                        )}
+                      />
+                      <p className="text-center text-sm text-gray-600 mt-auto">
+                        {cert.caption}
+                      </p>
+                    </div>
+                  </div>
+                </DialogTrigger>
+
                 {/* image */}
-                <div className="relative w-full flex justify-center items-center flex-col h-full">
+
+                <DialogContent className="w-[100vw] min-w-[50vw] max-h-[80dvh] overflow-auto ">
+                  <DialogTitle className="mb-4">{cert.caption}</DialogTitle>
+                  {/* <div className=" h-full w-full bg-black"></div> */}
                   <Image
                     src={cert.imageSrc}
                     alt={cert.caption}
-                    width={cert.width}
-                    height={cert.height}
-                    className={clsx(
-                      "object-contain rounded-lg shadow-md hover:scale-110 transition-transform duration-300",
-                      isMobile ? "w-full" : "w-72"
-                    )}
+                    width={cert.width ? cert.width * 8 : undefined}
+                    height={cert.height ? cert.height * 8 : undefined}
+                    className="object-fill rounded-lg shadow-md"
                   />
-                </div>
+                </DialogContent>
 
                 {/* caption text */}
-                <p className="text-center text-sm text-gray-600 mt-auto">
-                  {cert.caption}
-                </p>
-              </div>
+              </Dialog>
             </CarouselItem>
           ))}
         </CarouselContent>
