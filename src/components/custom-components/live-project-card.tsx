@@ -6,21 +6,6 @@ import { DotIcon, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { Project } from "@/app/types/types";
 
-type Tech = {
-  logo_url: string;
-  label: string;
-};
-
-type Project = {
-  name: string;
-  projectLogo: string;
-  description: string;
-  highlights: string[];
-  techStack?: Tech[];
-  demoVideo: string;
-  link: string;
-};
-
 type LiveProjectCardProps = {
   project: Project;
   isProjectsSection?: boolean;
@@ -174,7 +159,10 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
           {project.techStack
             ?.slice(0, project.techStack.length - 1)
             .map((tech, i) => (
-              <span className="text-xs flex justify-center items-center" key={i}>
+              <span
+                className="text-xs flex justify-center items-center"
+                key={i}
+              >
                 {tech.label} <DotIcon />{" "}
               </span>
             ))}
@@ -229,7 +217,8 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
           asChild
           className={clsx(
             "w-full",
-            isProjectsSection && "w-fit flex justify-end bg-sky-800 text-white/95"
+            isProjectsSection &&
+              "w-fit flex justify-end bg-sky-800 text-white/95"
           )}
         >
           <a href={project.link} target="_blank" rel="noopener noreferrer">
