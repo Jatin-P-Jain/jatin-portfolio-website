@@ -24,7 +24,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { set } from "zod";
 import { X } from "lucide-react";
 
 type Certification = {
