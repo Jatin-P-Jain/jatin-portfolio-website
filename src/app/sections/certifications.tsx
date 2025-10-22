@@ -17,6 +17,14 @@ import {
 } from "@/components/ui/carousel";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import clsx from "clsx";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { X } from "lucide-react";
 
 type Certification = {
   imageSrc: StaticImageData | string;
@@ -70,6 +78,7 @@ export default function CertificationsList() {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [hydrated, setHydrated] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -110,26 +119,67 @@ export default function CertificationsList() {
         <CarouselContent className="py-2 px-1 md:py-4 md:px-2 w-70">
           {certifications.map((cert) => (
             <CarouselItem key={cert.caption} className="">
-              <div className="transition-transform duration-300 hover:scale-105 bg-gray-default rounded-3xl p-4 border border-gray-200 shadow-md h-full flex flex-col justify-center gap-4">
+              <Dialog>
+                <DialogTrigger className="w-full h-full flex">
+                  <div className="transition-transform duration-300 hover:scale-105 bg-gray-default rounded-md p-4 border border-gray-200 shadow-md h-full flex flex-col justify-center gap-4">
+                    <div className="relative w-full flex justify-center items-center flex-col h-full">
+                      <Image
+                        src={cert.imageSrc}
+                        alt={cert.caption}
+                        width={cert.width}
+                        height={cert.height}
+                        className={clsx(
+                          "object-contain rounded-lg shadow-md hover:scale-110 transition-transform duration-300 flex mt-auto",
+                          isMobile ? "w-full" : "w-72"
+                        )}
+                      />
+                      <p className="text-center text-sm text-gray-600 mt-auto">
+                        {cert.caption}
+                      </p>
+                    </div>
+                  </div>
+                </DialogTrigger>
+
                 {/* image */}
-                <div className="relative w-full flex justify-center items-center flex-col h-full">
-                  <Image
-                    src={cert.imageSrc}
-                    alt={cert.caption}
-                    width={cert.width}
-                    height={cert.height}
-                    className={clsx(
-                      "object-contain rounded-lg shadow-md hover:scale-110 transition-transform duration-300",
-                      isMobile ? "w-full" : "w-72"
-                    )}
-                  />
-                </div>
+
+                <DialogContent className="w-[100vw] min-w-[50vw] max-h-[80dvh] p-0 overflow-hidden flex flex-col">
+                  <div className="sticky top-0 z-10 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2">
+                    <DialogTitle className="px-4 py-3">
+                      {cert.caption}
+                    </DialogTitle>
+                    <DialogClose
+                      className="
+        absolute right-3 top-3 z-20
+        inline-flex items-center justify-center rounded-md
+        opacity-70 hover:opacity-100
+      "
+                      aria-label="Close"
+                    >
+                      <X className="h-5 w-5" />
+                    </DialogClose>
+                  </div>
+                  {/* <div className=" h-full w-full bg-black"></div> */}
+                  {!imageLoaded && (
+                    <div className="flex justify-center items-center h-96 w-full">
+                      <div className="animate-spin rounded-full h-16 w-16 border-r-2 border-b-2 border-gray-900"></div>
+                    </div>
+                  )}
+                  <div className="min-h-0 flex-1 overflow-auto px-4 pb-4">
+                    <Image
+                      src={cert.imageSrc}
+                      alt={cert.caption}
+                      width={cert.width ? cert.width * 8 : undefined}
+                      height={cert.height ? cert.height * 8 : undefined}
+                      className="object-fill rounded-lg shadow-md"
+                      onLoad={() => {
+                        setImageLoaded(true);
+                      }}
+                    />
+                  </div>
+                </DialogContent>
 
                 {/* caption text */}
-                <p className="text-center text-sm text-gray-600 mt-auto">
-                  {cert.caption}
-                </p>
-              </div>
+              </Dialog>
             </CarouselItem>
           ))}
         </CarouselContent>

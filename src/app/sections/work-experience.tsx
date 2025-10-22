@@ -4,6 +4,12 @@ import Image from "next/image";
 import React from "react";
 
 import { workExperiences } from "@/data/work-experiences";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function WorkExperienceSection() {
   const [loading, setLoading] = React.useState(true);
@@ -118,22 +124,54 @@ export default function WorkExperienceSection() {
                     <p className="text-yellow-900">{exp.winner?.description}</p>
                     <div className="flex justify-center gap-4 md:gap-16 items-center flex-row">
                       {exp.winner?.images.map((image, idx) => (
-                        <div className="flex md:w-36 md:h-36 w-24 h-24 relative" key={idx}>
+                        <div
+                          className="flex md:w-36 md:h-36 w-24 h-24 relative"
+                          key={idx}
+                        >
                           {loading && (
                             <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
                               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-400"></div>
                             </div>
                           )}
-                          <Image
-                            key={idx}
-                            src={image}
-                            alt={`Logo ${idx + 1}`}
-                            fill
-                            sizes="1024px"
-                            className="rounded-lg object-cover hover:scale-200 transition-transform duration-300 hover:z-10 border-3 border-yellow-50 ring-2 bg-sky-900
+                          <Dialog>
+                            <DialogTrigger className="w-full h-full flex">
+                              <Image
+                                key={idx}
+                                src={image}
+                                alt={`Logo ${idx + 1}`}
+                                fill
+                                sizes="1024px"
+                                className="rounded-lg object-cover hover:scale-200 transition-transform duration-300 hover:z-10 border-3 border-yellow-50 ring-2 bg-sky-900
                             ring-gray-600"
-                            onLoad={() => setLoading(false)}
-                          />
+                                onLoad={() => setLoading(false)}
+                              />
+                            </DialogTrigger>
+
+                            {/* image */}
+
+                            <DialogContent className="w-[100vw] min-w-[50vw] max-h-[80dvh] overflow-auto ">
+                              <DialogTitle className="mb-4">
+                                {exp.winner?.title}
+                              </DialogTitle>
+                              {/* <div className=" h-full w-full bg-black"></div> */}
+                              {!loading && (
+                                <div className="flex justify-center items-center h-96 w-full">
+                                  <div className="animate-spin rounded-full h-16 w-16 border-r-2 border-b-2 border-gray-900"></div>
+                                </div>
+                              )}
+                              <Image
+                                key={idx}
+                                src={image}
+                                alt={`Logo ${idx + 1}`}
+                                fill
+                                sizes="1024px"
+                                className="rounded-lg object-cover hover:scale-200 transition-transform duration-300 hover:z-10 border-3"
+                                onLoad={() => setLoading(false)}
+                              />
+                            </DialogContent>
+
+                            {/* caption text */}
+                          </Dialog>
                         </div>
                       ))}
                     </div>

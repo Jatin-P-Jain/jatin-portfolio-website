@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { DotIcon, ExternalLink } from "lucide-react";
 import clsx from "clsx";
+import { Project } from "@/app/types/types";
 
 type Tech = {
   logo_url: string;

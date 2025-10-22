@@ -1,9 +1,19 @@
 "use client";
-import { CopyIcon, MailIcon, PhoneIcon } from "lucide-react";
+import { CalendarIcon, CopyIcon, MailIcon, PhoneIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import LinkedIn from "@/icons/linkedin.svg";
 import Whatsapp from "@/icons/icon-whatsapp.svg";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import MeetingForm from "../chatbot/components/meeting-form";
+import { Meeting } from "../types/types";
+import GoogleMeetIcon from "@/assets/images/google-meet-icon.svg";
 
 const contactDetails = [
   {
@@ -20,6 +30,10 @@ const contactDetails = [
 
 const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState<string | null>(null);
+  const [meetingScheduling, setMeetingScheduling] = useState(false);
+  const [isMeetingScheduled, setIsMeetingScheduled] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [meeting, setMeeting] = useState<Meeting | null>(null);
 
   const handleCopy = async (value: string) => {
     try {
@@ -85,6 +99,128 @@ const ContactSection: React.FC = () => {
           </li>
         ))}
       </ul>
+      <div className="flex flex-col w-full items-center justify-center gap-2 mb-4">
+        <span className="text-gray-600">
+          Want to connect? You can easily schedule a meeting with me right here.
+        </span>
+        <Dialog
+          open={isDialogOpen}
+          onOpenChange={(open) => {
+            setIsDialogOpen(open);
+            if (!open) {
+              // reset on close
+              setIsMeetingScheduled(false);
+              setMeetingScheduling(false);
+              setMeeting(null);
+            }
+          }}
+        >
+          <DialogTrigger asChild>
+            <Button
+              className=" bg-sky-800 hover:bg-sky-900 w-full cursor-pointer dark:text-white"
+              onClick={() => setIsDialogOpen(true)}
+            >
+              Schedule a meeting
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-3xl max-h-screen overflow-auto">
+            <DialogTitle>
+              {isMeetingScheduled ? (
+                <div className="flex items-center gap-2 text-green-800 dark:text-green-200">
+                  <span className="text-lg">🤝</span>
+                  <span className="font-semibold">
+                    Meeting Scheduled Successfully!
+                  </span>
+                </div>
+              ) : (
+                "Pick a Slot for Your Meeting"
+              )}
+            </DialogTitle>
+            {!isMeetingScheduled ? (
+              <MeetingForm
+                onSubmit={async (data) => {
+                  console.log(
+                    "Scheduling meeting from contact with data:",
+                    data
+                  );
+
+                  try {
+                    setMeetingScheduling(true);
+                    const scheduleResponse = await fetch(`/api/schedule`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        attendees: [data?.email],
+                        date: data?.date,
+                        time: data?.time,
+                        topic: `${data?.topic} - Meeting with ${data?.name}`,
+                        duration: data?.duration,
+                      }),
+                    });
+                    if (scheduleResponse.ok) {
+                      const scheduleData = await scheduleResponse.json();
+                      setIsMeetingScheduled(true);
+                      console.log(scheduleData);
+                      setMeeting(scheduleData);
+                    } else {
+                      console.log(
+                        "Failed to schedule meeting",
+                        scheduleResponse
+                      );
+
+                      setIsMeetingScheduled(false);
+                    }
+                  } catch (error: unknown) {
+                    console.log("Error Scheduling the meeting", error);
+                  } finally {
+                    setMeetingScheduling(false);
+                  }
+                }}
+                isSubmitting={meetingScheduling}
+              />
+            ) : (
+              <div className="flex flex-col mt-3 rounded-xl  bg-green-50 p-4 space-y-3">
+                <p className="text-sm text-green-700 dark:text-green-300">
+                  Check your email and calendar for the invite. The meeting
+                  details have been sent to you.
+                </p>
+                <div className="flex gap-2 items-center flex-wrap">
+                  {meeting?.htmlLink && (
+                    <a
+                      href={meeting?.htmlLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-row w-fit items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors"
+                    >
+                      <CalendarIcon className="h-4 w-4" />
+                      View Meeting
+                      <span aria-hidden>↗</span>
+                    </a>
+                  )}
+
+                  {meeting?.meetLink && (
+                    <a
+                      href={meeting?.meetLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-row w-fit items-center gap-2 bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors"
+                    >
+                      <Image
+                        src={GoogleMeetIcon}
+                        alt="Google Meet"
+                        width={16}
+                        height={16}
+                      />
+                      Join on Google Meet
+                      <span aria-hidden>↗</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      </div>
       <div className="mt-4 text-gray-600 mb-2 text-center text-sm">
         You may also find me on these platforms!
       </div>
