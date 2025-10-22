@@ -139,6 +139,11 @@ const ContactSection: React.FC = () => {
             {!isMeetingScheduled ? (
               <MeetingForm
                 onSubmit={async (data) => {
+                  console.log(
+                    "Scheduling meeting from contact with data:",
+                    data
+                  );
+
                   try {
                     setMeetingScheduling(true);
                     const scheduleResponse = await fetch(`/api/schedule`, {
@@ -158,6 +163,11 @@ const ContactSection: React.FC = () => {
                       console.log(scheduleData);
                       setMeeting(scheduleData);
                     } else {
+                      console.log(
+                        "Failed to schedule meeting",
+                        scheduleResponse
+                      );
+
                       setIsMeetingScheduled(false);
                     }
                   } catch (error: unknown) {

@@ -1,9 +1,10 @@
+import "dotenv/config";
 import { google } from "googleapis";
 import readline from "readline";
 
 const oAuth2Client = new google.auth.OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
+  process.env.CLIENT_ID, //add fromm .env file
+  process.env.CLIENT_SECRET, //add from .env file
   "http://localhost:3000/api/auth/callback"
 );
 const authUrl = oAuth2Client.generateAuthUrl({
