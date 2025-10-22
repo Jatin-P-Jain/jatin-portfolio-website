@@ -6,6 +6,21 @@ import { DotIcon, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { Project } from "@/app/types/types";
 
+type Tech = {
+  logo_url: string;
+  label: string;
+};
+
+type Project = {
+  name: string;
+  projectLogo: string;
+  description: string;
+  highlights: string[];
+  techStack?: Tech[];
+  demoVideo: string;
+  link: string;
+};
+
 type LiveProjectCardProps = {
   project: Project;
   isProjectsSection?: boolean;
