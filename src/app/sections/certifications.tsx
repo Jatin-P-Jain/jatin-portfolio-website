@@ -19,10 +19,13 @@ import { useBreakpoint } from "@/hooks/useBreakPoints";
 import clsx from "clsx";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { set } from "zod";
+import { X } from "lucide-react";
 
 type Certification = {
   imageSrc: StaticImageData | string;
@@ -76,6 +79,7 @@ export default function CertificationsList() {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const [hydrated, setHydrated] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -139,16 +143,40 @@ export default function CertificationsList() {
 
                 {/* image */}
 
-                <DialogContent className="w-[100vw] min-w-[50vw] max-h-[80dvh] overflow-auto ">
-                  <DialogTitle className="mb-4">{cert.caption}</DialogTitle>
+                <DialogContent className="w-[100vw] min-w-[50vw] max-h-[80dvh] p-0 overflow-hidden flex flex-col">
+                  <div className="sticky top-0 z-10 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2">
+                    <DialogTitle className="px-4 py-3">
+                      {cert.caption}
+                    </DialogTitle>
+                    <DialogClose
+                      className="
+        absolute right-3 top-3 z-20
+        inline-flex items-center justify-center rounded-md
+        opacity-70 hover:opacity-100
+      "
+                      aria-label="Close"
+                    >
+                      <X className="h-5 w-5" />
+                    </DialogClose>
+                  </div>
                   {/* <div className=" h-full w-full bg-black"></div> */}
-                  <Image
-                    src={cert.imageSrc}
-                    alt={cert.caption}
-                    width={cert.width ? cert.width * 8 : undefined}
-                    height={cert.height ? cert.height * 8 : undefined}
-                    className="object-fill rounded-lg shadow-md"
-                  />
+                  {!imageLoaded && (
+                    <div className="flex justify-center items-center h-96 w-full">
+                      <div className="animate-spin rounded-full h-16 w-16 border-r-2 border-b-2 border-gray-900"></div>
+                    </div>
+                  )}
+                  <div className="min-h-0 flex-1 overflow-auto px-4 pb-4">
+                    <Image
+                      src={cert.imageSrc}
+                      alt={cert.caption}
+                      width={cert.width ? cert.width * 8 : undefined}
+                      height={cert.height ? cert.height * 8 : undefined}
+                      className="object-fill rounded-lg shadow-md"
+                      onLoad={() => {
+                        setImageLoaded(true);
+                      }}
+                    />
+                  </div>
                 </DialogContent>
 
                 {/* caption text */}

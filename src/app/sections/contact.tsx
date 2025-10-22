@@ -117,7 +117,7 @@ const ContactSection: React.FC = () => {
         >
           <DialogTrigger asChild>
             <Button
-              className=" bg-sky-800 hover:bg-sky-900 w-full cursor-pointer"
+              className=" bg-sky-800 hover:bg-sky-900 w-full cursor-pointer dark:text-white"
               onClick={() => setIsDialogOpen(true)}
             >
               Schedule a meeting
