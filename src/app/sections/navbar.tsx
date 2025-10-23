@@ -104,12 +104,12 @@ export default function Navbar() {
             <div className="flex items-center gap-2 flex-col justify-center ">
               {/* Use Sun icon for light theme */}
               <Sun className="size-5" />{" "}
-              <span className="text-xs">Switch to Light</span>
+              <span className="text-xs">Light Mode</span>
             </div>
           ) : (
             <div className="flex items-center gap-2 flex-col justify-center">
               <Moon className="size-5" />{" "}
-              <span className="text-xs">Switch to Dark</span>
+              <span className="text-xs">Dark Mode</span>
             </div>
           )}
         </Button>
@@ -200,12 +200,12 @@ export default function Navbar() {
                 {theme === "dark" ? (
                   <>
                     <Sun className="size-5" />
-                    <span>Switch to Light</span>
+                    <span>Light Mode</span>
                   </>
                 ) : (
                   <>
                     <Moon className="size-5" />
-                    <span>Switch to Dark</span>
+                    <span>Dark Mode</span>
                   </>
                 )}
               </Button>
