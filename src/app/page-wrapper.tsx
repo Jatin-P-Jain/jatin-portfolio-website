@@ -7,7 +7,7 @@ import WorkExperienceSection from "./sections/work-experience";
 import ProjectsSection from "./sections/personal-projects";
 import CertificationsList from "./sections/certifications";
 import ContactSection from "./sections/contact";
-import { ChevronsUp } from "lucide-react";
+import { ChevronsUp, CodeXmlIcon, WandIcon } from "lucide-react";
 import clsx from "clsx";
 import { useBreakpoint } from "@/hooks/useBreakPoints";
 import ChatBotWidget from "./chatbot/chatbot-widget";
@@ -76,7 +76,7 @@ export default function PageWrapper() {
           <ChevronsUp className="size-5" />
           <span
             className={clsx(
-              "transition-all duration-300",
+              "transition-all duration-300 cursor-pointer",
               isMobile && collapsed
                 ? "opacity-0 max-w-0 max-h-0 overflow-hidden"
                 : "opacity-100 ml-2"
@@ -185,8 +185,10 @@ export default function PageWrapper() {
       </section>
       <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-1 px-8 pb-20 md:pb-4">
         <p className="text-gray-600 text-sm text-center w-full md:w-fit">
-          Made with ❤️ and NextJS 15 | Shadcn UI | Tailwind CSS by Jatin Praksh
-          Jain.
+          <WandIcon className="inline-block mr-2 size-5 text-amber-800" />
+          Designed and <CodeXmlIcon className="inline-block mr-1 size-5 text-sky-800" />
+          coded with care by Jatin Prakash Jain — Next.js 15 · Shadcn/UI ·
+          Tailwind CSS
         </p>
         {/* <span className="underline hover:scale-105 cursor-pointer transition-all duration-300">
           Leave a feedback!

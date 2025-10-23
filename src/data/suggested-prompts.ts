@@ -14,7 +14,6 @@ export const SUGGESTED_PROMPTS = [
   "Does he have a resume I can view?",
   "Tell me about his recent work experience.",
   "What are his strongest technical skills?",
-  "Can you provide links to his portfolio or GitHub?",
   "Schedule a meeting with him",
   "What is his availability for new projects?",
   "Let's schedule a meeting",
