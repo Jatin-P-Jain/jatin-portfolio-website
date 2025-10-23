@@ -123,7 +123,7 @@ const ContactSection: React.FC = () => {
               Schedule a meeting
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-3xl max-h-screen overflow-auto">
+          <DialogContent className="md:max-w-3xl max-h-screen overflow-auto">
             <DialogTitle>
               {isMeetingScheduled ? (
                 <div className="flex items-center gap-2 text-green-800 dark:text-green-200">

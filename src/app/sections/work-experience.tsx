@@ -149,25 +149,27 @@ export default function WorkExperienceSection() {
 
                             {/* image */}
 
-                            <DialogContent className="w-[100vw] min-w-[50vw] max-h-[80dvh] overflow-auto ">
+                            <DialogContent className="flex flex-col">
                               <DialogTitle className="mb-4">
                                 {exp.winner?.title}
                               </DialogTitle>
                               {/* <div className=" h-full w-full bg-black"></div> */}
-                              {!loading && (
+                              {loading && (
                                 <div className="flex justify-center items-center h-96 w-full">
                                   <div className="animate-spin rounded-full h-16 w-16 border-r-2 border-b-2 border-gray-900"></div>
                                 </div>
                               )}
-                              <Image
-                                key={idx}
-                                src={image}
-                                alt={`Logo ${idx + 1}`}
-                                fill
-                                sizes="1024px"
-                                className="rounded-lg object-cover hover:scale-200 transition-transform duration-300 hover:z-10 border-3"
-                                onLoad={() => setLoading(false)}
-                              />
+                              <div className="relative min-h-[40vh] w-full">
+                                <Image
+                                  key={idx}
+                                  src={image}
+                                  alt={`Logo ${idx + 1}`}
+                                  fill
+                                  sizes="1024px"
+                                  className="rounded-lg object-contain"
+                                  onLoad={() => setLoading(false)}
+                                />
+                              </div>
                             </DialogContent>
 
                             {/* caption text */}

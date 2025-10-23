@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { DotIcon, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { Project } from "@/app/types/types";
+import { Dialog } from "@radix-ui/react-dialog";
+import { DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog";
 
 type LiveProjectCardProps = {
   project: Project;
@@ -15,6 +17,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
   project,
   isProjectsSection = false,
 }) => {
+  const [videoThumbnailLoading, setVideoThumbnailLoading] = useState(true);
   const [videoLoading, setVideoLoading] = useState(true);
 
   // refs for scrollable detection
@@ -182,7 +185,7 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
       {/* Video */}
       {!isProjectsSection && (
         <div className="relative w-full h-fit flex justify-center items-center mb-2 md:mb-4">
-          {videoLoading && (
+          {videoThumbnailLoading && (
             <div className="flex items-center justify-center flex-col gap-2 absolute">
               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-400"></div>
               <span className="ml-2 text-gray-600 text-xs">
@@ -190,17 +193,46 @@ const LiveProjectCard: React.FC<LiveProjectCardProps> = ({
               </span>
             </div>
           )}
-          <div className="flex w-60 md:w-80 h-fit max-w-90 rounded-md overflow-hidden border-2 ring-2">
-            <video
-              src={project.demoVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="object-fill"
-              preload="auto"
-              onLoadedData={() => setVideoLoading(false)}
-            />
+          <div className="flex flex-col w-60 md:w-80 h-fit max-w-90 rounded-md border-2 ring-2 overflow-hidden relative">
+            <Dialog>
+              <DialogTrigger>
+                <video
+                  src={project.demoVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="object-fill"
+                  preload="auto"
+                  onLoadedData={() => setVideoThumbnailLoading(false)}
+                />
+                <div className="bg-gray-500/50 flex justify-center items-center text-sm text-gray-800 font-semibold cursor-pointer">
+                  View Demo
+                </div>
+              </DialogTrigger>
+              <DialogContent className="min-w-[80vw] md:max-w-5xl max-h-[100vh] p-4 overflow-hidden">
+                <DialogTitle>{project.name} - Demo</DialogTitle>
+                {videoLoading && (
+                  <div className="flex items-center justify-center flex-col gap-2 ">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-400"></div>
+                    <span className="ml-2 text-gray-600 text-xs">
+                      Loading demo video...
+                    </span>
+                  </div>
+                )}
+                <video
+                  src={project.demoVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="object-fill"
+                  preload="auto"
+                  onLoadedData={() => setVideoLoading(false)}
+                  controls
+                />
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       )}
