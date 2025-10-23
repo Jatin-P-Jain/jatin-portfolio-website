@@ -43,7 +43,7 @@ export const workExperiences: WorkExperience[] = [
     organization: "Zapcom Solutions Pvt. Ltd.",
     organizationLogo: Zapcom,
     role: "Senior Frontend Developer",
-    timeline: "Jun 2023 - Present | 2+ years",
+    timeline: "June 2023 - Present | 2+ years",
     description:
       "Developed and maintained scalable web applications, collaborated with cross-functional teams, and optimized UI performance.",
     techStack: [

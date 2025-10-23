@@ -187,7 +187,7 @@ export default function PageWrapper() {
         <p className="text-gray-600 text-sm text-center w-full md:w-fit">
           <WandIcon className="inline-block mr-2 size-5 text-amber-800" />
           Designed and <CodeXmlIcon className="inline-block mr-1 size-5 text-sky-800" />
-          coded with care by Jatin Prakash Jain — Next.js 15 · Shadcn/UI ·
+          coded with care by <span className="font-semibold">Jatin Prakash Jain</span> — Next.js 15 · Shadcn/UI ·
           Tailwind CSS
         </p>
         {/* <span className="underline hover:scale-105 cursor-pointer transition-all duration-300">
