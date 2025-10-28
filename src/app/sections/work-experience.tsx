@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import clsx from "clsx";
 
 export default function WorkExperienceSection() {
   const [loading, setLoading] = React.useState(true);
@@ -25,8 +26,8 @@ export default function WorkExperienceSection() {
       <ul className="w-full flex flex-col gap-6 md:gap-8 justify-center items-center md:px-8">
         {workExperiences.map((exp, idx) => (
           <li key={idx} className="w-full">
-            <Card className="bg-white rounded-lg shadow-gray-300 shadow-md p-2 py-6 md:p-8 transition-all duration-300 hover:scale-105 gap-0">
-              <CardTitle className="text-lg md:text-xl lg:text-2xl font-bold flex gap-2 text-black/90 justify-start items-center px-4">
+            <Card className="bg-gray-50 text-white rounded-lg shadow-gray-300 shadow-md p-2 py-6 md:p-8 transition-all duration-300 hover:scale-105 gap-0">
+              <CardTitle className="text-gray-800 text-lg md:text-xl lg:text-2xl font-bold flex gap-2 justify-start items-center px-4">
                 <div className="relative w-20 h-12 md:w-20 md:h-20">
                   <Image
                     src={exp.organizationLogo}
@@ -40,26 +41,59 @@ export default function WorkExperienceSection() {
 
                 {exp.organization}
               </CardTitle>
-              <CardContent className="text-gray-600 gap-0">
-                <p className="text-md font-medium mb-2 text-black/80 flex items-start gap-2 w-full justify-between flex-col md:flex-row">
+              <CardContent className="text-gray-600 gap-1 flex flex-col">
+                <p className="text-md font-medium mb-2 flex items-start gap-2 w-full justify-between flex-col md:flex-row">
                   {exp.role}
                   <span className="italic">{exp.timeline}</span>
                 </p>
                 <p className="mb-3 text-sm md:text-base">{exp.description}</p>
 
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <h4 className="font-semibold">
+                    Tech Stack worked upon –
+                  </h4>
+                  <div className="flex flex-wrap gap-3 md:gap-4">
+                    {exp.techStack.map((tech, i) => (
+                      <span
+                        key={i}
+                        className=" px-4 py-1 rounded-full text-sm font-semibold shadow-md bg-gray-300 dark:border-1 flex justify-center items-center gap-1"
+                      >
+                        <div className="relative w-4 h-4 mr-1">
+                          <Image
+                            src={tech.logo}
+                            alt={tech.name}
+                            fill
+                            sizes="32px"
+                            className="object-contain"
+                          />
+                        </div>
+
+                        {tech.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
                 {exp.projects && exp.projects.length > 0 && (
-                  <div className="flex flex-col gap-4">
-                    <h4 className="font-semibold text-black/90">
+                  <div className="flex flex-col gap-2">
+                    <h4 className="font-semibold">
                       Projects Worked On –
                     </h4>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="flex flex-wrap flex-col-reverse lg:flex-row gap-4">
                       {exp.projects.map((project, pIdx) => (
                         <Card
                           key={pIdx}
-                          className="border-none bg-black/5 p-4 text-black/70 shadow-md gap-2"
+                          className="border-1 px-8 shadow-lg gap-2 lg:w-[48%] w-full"
                         >
-                          <h5 className="font-semibold text-base text-gray-600">
-                            {project.title}
+                          <h5
+                            className={clsx(
+                              "font-semibold text-base text-gray-600",
+                              project.title ===
+                                "Customer Loyalty SaaS Platform" &&
+                                "text-gray-800"
+                            )}
+                          >
+                            {project.title}{" "}
                           </h5>
                           <div className="">
                             <span className="font-medium text-sm">
@@ -91,33 +125,8 @@ export default function WorkExperienceSection() {
                 )}
               </CardContent>
               <CardFooter className="flex flex-col justify-start items-start gap-4">
-                <div className="flex flex-wrap gap-4">
-                  <h4 className="font-semibold text-black/90">
-                    Tech Stack worked upon –
-                  </h4>
-                  <div className="flex flex-wrap gap-3 md:gap-4">
-                    {exp.techStack.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-black/80 px-4 py-1 rounded-full text-sm font-semibold shadow-md bg-black/5 flex justify-center items-center gap-1"
-                      >
-                        <div className="relative w-4 h-4 mr-1">
-                          <Image
-                            src={tech.logo}
-                            alt={tech.name}
-                            fill
-                            sizes="32px"
-                            className="object-contain"
-                          />
-                        </div>
-
-                        {tech.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
                 {exp.winner && (
-                  <div className="max-w-2xl mx-auto p-6 bg-yellow-50 rounded-lg shadow-md text-center flex flex-col gap-4 mt-4 text-sm md:text-base">
+                  <div className="max-w-2xl mx-auto p-6 bg-yellow-50 rounded-lg shadow-md text-center flex flex-col gap-4 mt-8 text-sm md:text-base">
                     <h3 className="text-base md:text-xl lg:text-2xl font-bold text-yellow-800">
                       {exp.winner?.title} 🎉
                     </h3>

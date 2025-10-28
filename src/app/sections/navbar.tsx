@@ -98,18 +98,19 @@ export default function Navbar() {
         <Button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           variant="ghost"
+          
           className="flex items-center gap-1 !p-2 cursor-pointer flex-col justify-center hover:bg-transparent"
         >
           {theme === "dark" ? (
             <div className="flex items-center gap-2 flex-col justify-center ">
               {/* Use Sun icon for light theme */}
-              <Sun className="size-5" />{" "}
-              <span className="text-xs">Light Mode</span>
+              <Sun className="size-4" />{" "}
+              <span className="text-[10px]">Light Mode</span>
             </div>
           ) : (
             <div className="flex items-center gap-2 flex-col justify-center">
-              <Moon className="size-5" />{" "}
-              <span className="text-xs">Dark Mode</span>
+              <Moon className="size-4" />{" "}
+              <span className="text-[10px]">Dark Mode</span>
             </div>
           )}
         </Button>

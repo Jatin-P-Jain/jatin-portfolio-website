@@ -105,11 +105,9 @@ export default function CertificationsList() {
       <h2 className="bg-gray-300 px-6 py-2 rounded-lg font-medium text-gray-800 mb-4">
         Certifications
       </h2>
-      <div className=" text-justify text-gray-600">
-        <p>
-          These certifications reflect my commitment to continuous learning and
-          staying updated with the latest technologies in software development.
-        </p>
+      <div className="md:text-lg text-justify text-gray-600">
+        These certifications reflect my commitment to continuous learning and
+        staying updated with the latest technologies in software development.
       </div>
       <Carousel
         orientation="horizontal"

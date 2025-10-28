@@ -183,8 +183,8 @@ export default function PageWrapper() {
         ></div>
         <ContactSection />
       </section>
-      <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-1 px-8 pb-20 md:pb-4">
-        <p className="text-gray-600 text-sm text-center w-full md:w-fit">
+      <footer className="w-full flex flex-col md:flex-row items-center justify-center py-4 bg-gray-100 gap-1 px-8 pb-24 md:pb-4">
+        <p className="text-gray-700 text-sm text-center w-full md:w-fit">
           <WandIcon className="inline-block mr-2 size-5 text-amber-800" />
           Designed and <CodeXmlIcon className="inline-block mr-1 size-5 text-sky-800" />
           coded with care by <span className="font-semibold">Jatin Prakash Jain</span> — Next.js 15 · Shadcn/UI ·
